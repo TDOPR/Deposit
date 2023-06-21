@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pp.mapper.EvmRechargeMapper">
+
+
+    <select id="page" resultType="com.pp.model.vo.EvmRechargeVO" parameterType="com.pp.model.condition.EvmTokenRechargeCondition" >
+        SELECT
+        u.email,w.coin_id coinId,status,w.address,w.mum,w.created createTime
+        FROM
+        evm_token_recharge w
+        LEFT JOIN
+        app_users u
+        ON u.id=w.uid
+        WHERE
+        1=1
+        <if test="param.email!=null and param.email!=''">
+            AND u.email=  #{param.email}
+        </if>
+        <if test="param.coinId!=null and param.coinId!='' ">
+            AND w.coin_id=  #{param.coinId}
+        </if>
+        <if test="param.address!=null and param.address!='' ">
+            AND w.address=  #{param.address}
+        </if>
+        <if test="param.beginDate!=null">
+            AND w.created <![CDATA[ >= ]]> #{param.beginDate}
+        </if>
+        <if test="param.endDate!=null">
+            AND w.created <![CDATA[ <= ]]> #{param.endDate}
+        </if>
+        ORDER BY w.created DESC
+    </select>
+
+</mapper>

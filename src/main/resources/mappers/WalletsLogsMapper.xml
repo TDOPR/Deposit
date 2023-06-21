@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pp.mapper.WalletLogsMapper">
+
+    <select id="getMyProxyWalletLogs" resultType="com.pp.model.WalletLogs">
+        SELECT
+        type,sum(amount) amount
+        FROM wallet_logs
+        WHERE
+        userId=#{userId}
+        AND type in
+        <foreach collection="typeList" item="type" separator="," open="(" close=")">
+            #{type}
+        </foreach>
+        GROUP BY TYPE;
+    </select>
+
+    <!--    <select id="getDateSection" resultType="com.pp.model.dto.DateSection">-->
+    <!--        SELECT min(createTime) minDate, max(createTime) maxDate-->
+    <!--        FROM wallet_logs-->
+    <!--        WHERE userId = #{userId}-->
+    <!--    </select>-->
+
+    <select id="getPrizeRecord" resultType="com.pp.model.vo.UserRecordVO">
+        SELECT sub_user_level, sub_user_address, amount
+        FROM wallet_logs
+        WHERE user_id = #{userId}
+          AND sub_id IS NOT NULL
+    </select>
+
+    <select id="sumTotalAmountByType" resultType="java.math.BigDecimal">
+        SELECT sum(amount)
+        FROM wallet_logs
+        WHERE type = #{type}
+    </select>
+
+    <select id="sumYesterdayAmountByType" resultType="java.math.BigDecimal">
+        SELECT sum(amount)
+        FROM wallet_logs
+        WHERE type = #{type}
+          AND createTime BETWEEN DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%Y-%m-%d 00:00:00')
+            AND DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%Y-%m-%d 23:59:59')
+    </select>
+
+    <select id="sumProfitTotalAmountByTypeIn" resultType="java.math.BigDecimal">
+        SELECT sum(amount) FROM wallet_logs
+        WHERE
+        type in
+        <foreach collection="typeList" item="type" separator="," open="(" close=")">
+            #{type}
+        </foreach>
+    </select>
+
+    <select id="getMinDate" resultType="java.time.LocalDate">
+        SELECT min(createTime)
+        from wallet_logs
+    </select>
+
+    <select id="sumTotalAmountByTypeAndDateBetween" resultType="java.math.BigDecimal">
+        SELECT sum(amount)
+        FROM wallet_logs
+        WHERE createTime BETWEEN #{begin} AND #{end}
+          AND type = #{type}
+
+
+    </select>
+
+    <select id="sumTotalAmountByTypeInAndDateBetween" resultType="java.math.BigDecimal">
+        SELECT
+        sum(amount)
+        FROM wallet_logs
+        WHERE
+        createTime BETWEEN #{begin} AND #{end}
+        AND
+        type in
+        <foreach collection="typeList" item="type" separator="," open="(" close=")">
+            #{type}
+        </foreach>
+
+    </select>
+
+    <select id="sumProfitTotalAmountByUserIdAndTypeIn" resultType="java.math.BigDecimal">
+        SELECT
+        sum(amount)
+        FROM wallet_logs
+        WHERE
+        userId=#{userId}
+        AND
+        type in
+        <foreach collection="typeList" item="type" separator="," open="(" close=")">
+            #{type}
+        </foreach>
+    </select>
+
+    <select id="sumAmountByAndUserIdAndTypeListAndDateRange" resultType="java.math.BigDecimal">
+        SELECT
+        sum(amount)
+        FROM wallet_logs
+        WHERE
+        userId=#{userId}
+        AND
+        type in
+        <foreach collection="typeList" item="type" separator="," open="(" close=")">
+            #{type}
+        </foreach>
+        <if test="beginDate!=null">
+            AND createTime <![CDATA[ >= ]]> #{beginDate}
+        </if>
+        <if test="endDate!=null">
+            AND createTime <![CDATA[ <= ]]> #{endDate}
+        </if>
+    </select>
+
+    <select id="pageByDynamic" resultType="com.pp.model.WalletLogs">
+        select sum(amount) amount, action, date_format(createTime, '%Y-%m-%d') createTime
+        from wallet_logs
+        where
+        userId=#{userId}
+        and type in
+        <foreach collection="typeList" item="type" separator="," open="(" close=")">
+            #{type}
+        </foreach>
+        <if test="beginDate!=null">
+            AND createTime <![CDATA[ >= ]]> #{beginDate}
+        </if>
+        <if test="endDate!=null">
+            AND createTime <![CDATA[ <= ]]> #{endDate}
+        </if>
+        GROUP BY
+        date_format(createTime, '%Y-%m-%d')
+        order by createTime desc
+    </select>
+
+    <select id="pageByAllType" resultType="com.pp.model.WalletLogs">
+        select tmp.* from (
+        select sum(amount) amount, action, date_format(createTime, '%Y-%m-%d') createTime,null type
+        from wallet_logs
+        where
+        userId=#{userId}
+        and type in
+        <foreach collection="typeList" item="type" separator="," open="(" close=")">
+            #{type}
+        </foreach>
+        <if test="beginDate!=null">
+            AND createTime <![CDATA[ >= ]]> #{beginDate}
+        </if>
+        <if test="endDate!=null">
+            AND createTime <![CDATA[ <= ]]> #{endDate}
+        </if>
+        GROUP BY
+        date_format(createTime, '%Y-%m-%d')
+        UNION ALL
+        select amount,action,createTime,type
+        from wallet_logs
+        where
+        userId=#{userId}
+        and type not in
+        <foreach collection="typeList" item="type" separator="," open="(" close=")">
+            #{type}
+        </foreach>
+        <if test="beginDate!=null">
+            AND createTime <![CDATA[ >= ]]> #{beginDate}
+        </if>
+        <if test="endDate!=null">
+            AND createTime <![CDATA[ <= ]]> #{endDate}
+        </if>
+        ) tmp order by createTime desc
+    </select>
+
+</mapper>

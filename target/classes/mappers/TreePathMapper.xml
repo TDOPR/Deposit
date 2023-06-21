@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pp.mapper.TreePathMapper">
+
+    <resultMap type="com.pp.model.dto.TreePathAmountTreeDTO" id="treePathAmountTree">
+        <result column="descendant" property="descendant"/>
+        <result column="level" property="level"/>
+        <result column="principalAmount" property="principalAmount"/>
+        <result column="generatedAmount" property="generatedAmount"/>
+        <collection property="childList" ofType="com.pp.model.dto.TreeUserIdDTO"
+                    column="descendant" select="findTreeById"/>
+    </resultMap>
+
+    <resultMap type="com.pp.model.dto.TreeUserIdDTO" id="treePathTree">
+        <result column="email" property="email"/>
+        <result column="descendant" property="descendant"/>
+        <result column="level" property="userLevel"/>
+        <result column="robotLevel" property="robotLevel"/>
+        <result column="walletAmount" property="walletAmount"/>
+        <result column="principalAmount" property="principalAmount"/>
+        <result column="robotAmount" property="robotAmount"/>
+        <collection property="childList" ofType="com.pp.model.dto.TreeUserIdDTO" column="descendant"
+                    select="findTreeById"/>
+    </resultMap>
+
+
+    <select id="findTreeById" resultMap="treePathTree">
+        SELECT
+            u.email,u.level,t.ancestor,t.descendant,w.robotLevel,w.robotAmount,w.walletAmount,w.principalAmount
+        FROM
+            tree_paths t
+                LEFT JOIN wallets w
+                          ON t.descendant = w.userId
+                LEFT JOIN app_users u
+                          ON u.id=w.userId
+        WHERE  t.ancestor=#{id}
+          AND
+            t.level=1
+    </select>
+
+    <select id="teamSum" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            tree_paths t
+        WHERE  t.ancestor=#{id}
+          AND
+            t.level != 0
+    </select>
+
+
+    <select id="getChildren" resultMap="treePathTree">
+        SELECT
+            t.ancestor,t.descendant,t.level
+        FROM
+            tree_paths t
+        WHERE  t.ancestor=#{id}
+          AND
+            t.level =1
+
+    </select>
+
+    <insert id="insertTreePath">
+        INSERT INTO tree_paths (ancestor, descendant, LEVEL)
+        SELECT t.ancestor,
+               #{uid},
+               LEVEL + 1
+        FROM tree_paths AS t
+        WHERE t.descendant = #{pid}
+    </insert>
+
+    <select id="getAllAmountByUserId" resultType="com.pp.model.dto.TreePathAmountDTO">
+        SELECT
+            (w.principalAmount+w.robotAmount) totalAmount,t.descendant
+        FROM tree_paths t
+                 LEFT JOIN
+             wallets w
+             ON t.descendant=w.userId
+        WHERE t.ancestor=#{uid}
+    </select>
+
+    <select id="getProfitAmountByUserIdAndLevelList" resultType="com.pp.model.dto.TreePathAmountDTO">
+        SELECT
+        sum(p.generatedAmount) totalAmount,t.level
+        FROM tree_paths t
+        LEFT JOIN
+        profit_logs p ON t.descendant=p.userId
+        WHERE
+        t.ancestor=#{uid}
+        AND p.createDate=#{localDate}
+        AND t.level in
+        <foreach collection="levelList" item="level" separator="," open="(" close=")">
+            #{level}
+        </foreach>
+        group by level
+    </select>
+
+    <select id="getMinTeamTotalProfitAmount" resultType="java.math.BigDecimal">
+        SELECT
+            sum(p.generatedAmount)
+        FROM tree_paths t
+                 LEFT JOIN
+             profit_logs p
+             ON t.descendant=p.userId
+        WHERE
+            p.createDate=#{localDate}
+          AND t.ancestor
+            IN(
+                  SELECT descendant from tree_paths where ancestor=#{uid} and level=1 and largeTeam=0
+              )
+    </select>
+
+    <select id="getTeamTotalProfitAmount" resultType="java.math.BigDecimal">
+        SELECT
+            sum(p.generatedAmount)
+        FROM tree_paths t
+                 LEFT JOIN
+             profit_logs p
+             ON t.descendant=p.userId
+        WHERE
+            p.createDate=#{localDate}
+          AND t.ancestor=#{uid}
+          AND t.level>0
+    </select>
+
+    <select id="getMyItemAmountByUserId" resultType="java.math.BigDecimal">
+        SELECT
+            SUM(w.principalAmount+w.robotAmount) totalAmount
+        FROM tree_paths t
+                 LEFT JOIN
+             wallets w
+             ON t.descendant=w.userId
+        WHERE
+            t.ancestor=#{uid}
+          AND
+            t.level>0
+    </select>
+
+    <select id="getAllAncestorIdByUserId" resultType="java.lang.Integer">
+        SELECT  ancestor FROM tree_paths WHERE descendant=#{uid} and level>0
+    </select>
+
+    <select id="getTreePathAmountTreeByUserId" resultType="com.pp.model.dto.TreePathAmountTreeDTO">
+        SELECT
+            p.generatedAmount,w.principalAmount,t.descendant,u.level,p.createDate
+        FROM
+            tree_paths t
+                LEFT JOIN
+            profit_logs p
+            ON t.descendant=p.userId
+                LEFT JOIN
+            wallets w
+            ON t.descendant=w.userId
+                LEFT JOIN
+            app_users u
+            ON u.id=t.descendant
+        WHERE
+            p.createDate=#{localDate}
+          AND t.ancestor=#{uid}
+          AND t.level=1
+    </select>
+
+    <select id="getTreePathLevelOrderByLevel" resultType="com.pp.model.dto.TreePathLevelDTO">
+        SELECT
+            t.ancestor userId,u.level userLevel
+        FROM
+            tree_paths t
+                LEFT JOIN
+            wallets w
+            ON t.ancestor=w.userId
+                LEFT JOIN
+            app_users u
+            ON u.id=t.ancestor
+        WHERE
+            t.descendant=#{descendant}
+          AND
+            w.principalAmount>=#{proxyMinAmount}
+          AND
+            u.level>0
+          AND
+            t.level>0
+        ORDER BY
+            t.level
+    </select>
+
+</mapper>

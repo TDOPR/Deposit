@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pp.mapper.AppUserMapper">
+
+    <select id="findInviteIdByUserId" resultType="java.lang.Integer">
+        SELECT  inviteId from app_users where id=#{userId}
+    </select>
+
+    <select id="findUserIdByUserAddress" resultType="java.lang.Integer">
+        SELECT  id from app_users where user_address=#{userAddress}
+    </select>
+
+<!--    <select id="page" resultType="com.pp.model.vo.AppUsersVO"  parameterType="com.pp.model.condition.AppUsersCondition" >-->
+<!--        SELECT-->
+<!--        u.id,u.email,u.nickName,u.enabled,u.loginCount,u.level,u.createTime,u.inviteId parentId,u.teamTotalAmount subordinateAmount,-->
+<!--        tmp.rechargeAmount,w.walletAmount walletAmountD,w.robotLevel-->
+<!--        FROM-->
+<!--        app_users u-->
+<!--        LEFT JOIN-->
+<!--        wallets  w-->
+<!--        ON  w.userId=u.id-->
+<!--        Left JOIN-->
+<!--        (select  userId, sum(amount) rechargeAmount from wallet_logs where type=5 GROUP BY userId  ) tmp-->
+<!--        ON tmp.userId=u.id-->
+<!--        WHERE-->
+<!--        1=1-->
+<!--        <if test="param.enabled!=null">-->
+<!--            AND u.enabled=  #{param.enabled}-->
+<!--        </if>-->
+<!--        <if test="param.email!=null and param.email!=''">-->
+<!--            AND u.email=  LIKE CONCAT('%',#{param.email},'%')-->
+<!--        </if>-->
+<!--        <if test="param.nickName!=null and param.nickName!=''">-->
+<!--            AND u.nickName  LIKE CONCAT('%',#{param.nickName},'%')-->
+<!--        </if>-->
+<!--        <if test="param.level!=null">-->
+<!--            AND u.level=  #{param.level}-->
+<!--        </if>-->
+<!--        <if test="param.minAmount!=null">-->
+<!--            AND tmp.rechargeAmount <![CDATA[ >= ]]>  #{param.minAmount}-->
+<!--        </if>-->
+<!--        <if test="param.maxAmount!=null">-->
+<!--            AND tmp.rechargeAmount <![CDATA[ <= ]]>  #{param.maxAmount}-->
+<!--        </if>-->
+<!--        <if test="param.beginDate!=null">-->
+<!--            AND u.createTime <![CDATA[ >= ]]> #{param.beginDate}-->
+<!--        </if>-->
+<!--        <if test="param.endDate!=null">-->
+<!--            AND u.createTime <![CDATA[ <= ]]> #{param.endDate}-->
+<!--        </if>-->
+<!--    </select>-->
+
+<!--    <select id="getValidUserCountByInviteId" resultType="java.lang.Integer">-->
+<!--        SELECT-->
+<!--            count(1)-->
+<!--        FROM-->
+<!--            app_users u-->
+<!--                LEFT JOIN-->
+<!--            wallets  w-->
+<!--            ON  w.userId=u.id-->
+<!--        WHERE-->
+<!--            u.inviteId=#{userId}-->
+<!--          AND-->
+<!--            w.principalAmount  <![CDATA[ > ]]> 0-->
+<!--    </select>-->
+
+<!--    <select id="getRobotDetailByUserId" resultType="com.pp.model.dto.AppUserRebotDTO">-->
+<!--        SELECT-->
+<!--            count(w.id) userCount,sum(robotAmount) robotAmount-->
+<!--        FROM-->
+<!--            wallets w-->
+<!--                LEFT JOIN-->
+<!--            app_user_rebot_ref u-->
+<!--            ON  w.userId=u.inviteUserId-->
+<!--        WHERE-->
+<!--            u.userId=#{userId}-->
+<!--    </select>-->
+
+</mapper>

@@ -1,0 +1,131 @@
+server:
+  port: 8849
+  servlet:
+    context-path:
+spring:
+  profiles:
+    # dev=测试  prod=正式
+    active: dev
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 5
+      minIdle: 5
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1
+  redis:
+    #字典缓存订阅的主题
+    topic: refreshDictionary
+    #redis服务器的ip
+    host: 127.0.0.1
+    port: 6379
+    jedis:
+      pool:
+        max-active: 8
+  batch:
+    job:
+      enabled: false
+mybatis-plus:
+  mapper-locations: classpath*:/mappers/*.xml
+  global-config:
+    id-type: 0
+    db-column-underline: true
+  configuration:
+    # ??????????????:???????Java???????????
+    map-underscore-to-camel-case: true
+eth:
+  token_list_path: C:\Users\Administrator\Desktop\tokenList.json
+
+logging:
+  config: classpath:logback-spring.xml
+
+#########################  java Web Token 配置  #########################
+jwt:
+  # 加密密钥
+  secret: iwqjhda8232bjgh432[cicada-smile]
+  # token有效时长(单位: 秒) 设置为一天=86400
+  #expire: 8640000000000000
+  expire: 86400
+  #请求头参数
+  tokenName: token
+
+#########################  Spring security 配置  #########################
+security:
+  #设置忽略认证的请求
+  ignore:
+    get:
+      - /apidoc/**
+      - /druid/**
+      - ${app.virtualPathPrefix}/**
+      - /sendCaptchaToEmail/**
+    all:
+      - /home/*
+    post:
+
+#########################  应用其它配置   ############################
+app:
+  #服务器Ip
+  ip: 192.168.2.199
+  #服务器地址
+  serverIp: http://${app.ip}:${server.port}
+  #文件存储根路径
+  rootPath: D:\data\
+  #虚拟路径前缀
+  virtualPathPrefix: /virtual
+  #虚拟路径URL
+  virtualPathURL: ${app.serverIp}${app.virtualPathPrefix}/
+  #文件上传限制 MB
+  fileMaxSize: 30
+  #更新业绩的延迟任务时间 (单位分钟)
+  delayTime: 1
+  #是否加载redisson的RateLimit限流相关Bean   依赖reids
+  enableRateLimit: false
+  #限流模式  single=单实例限流,all=全局限流(分布式限流)
+  rateLimitModel: all
+  #是否加载表单去重提交验证  依赖reids
+  enableRepeatSubmit: true
+  #是否启动分布式锁  依赖reids
+  enableRedisLock: true
+  #是否单节点部署
+  singleDeploy: true
+  #是否为正式环境 (false 忽略验证码验证)
+  prodEnv: false
+
+#基础token
+token:
+  #web3ETH服务地址
+  web3EthServiceUrl: https://ethereum-goerli.publicnode.com
+  #web3BSC服务地址
+  web3BscServiceUrl: https://bsc-testnet.publicnode.com
+  #web3TRON服务地址
+  web3TronServiceUrl: https://bsc-testnet.publicnode.com
+  #钱包地址
+  web3Wallet: 11f88eb3a9b868670c01a5582652ed69437479133d226f33c6117f9a3f53b180
+
+#-------------  测试环境  配置  ---------------
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/tanzhonghe?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull
+    username: root
+    password:
+
+
+#-------------  正式环境  配置  ---------------
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.2.199:3306/ukswap?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: 123456

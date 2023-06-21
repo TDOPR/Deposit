@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pp.mapper.EvmUserWalletMapper">
+    <update id="setLevelByRecord">
+        UPDATE evm_user_wallet
+        SET user_level=#{userLevel}
+        WHERE user_address=#{userAddress}
+        AND chian_id=#{chainId}
+    </update>
+
+    <select id="getUserLevel" resultType="java.lang.Integer">
+        SELECT
+        MAX(t.user_level)
+        FROM evm_user_wallet t
+        WHERE t.uid=#{userId}
+    </select>
+
+    <select id="getUserAddress" resultType="java.lang.Integer">
+        SELECT
+            t.user_address
+        FROM evm_user_wallet t
+        WHERE t.uid=#{userId}
+    </select>
+</mapper>
