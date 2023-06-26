@@ -58,6 +58,9 @@ public class EventManager {
     @Resource
     private AppUserMapper appUserMapper;
     
+    @Resource
+    private EvmUserWalletMapper evmUserWalletMapper;
+    
     public void analyzeETHEvent() throws Exception {
         CoinConfig scanDataConfig = coinConfigDao.getScanDataConfig();
         if (scanDataConfig == null) {
@@ -124,6 +127,9 @@ public class EventManager {
                 Integer userLevel = new Integer(new BigInteger(topics.get(3).toString().substring(2),16).toString());
                 tradeManager.evmRecharge(userAddress, rechargeAmount, userLevel, ChainTypeEnum.GOERLI.getChainId(), RechargeStatusEnum.RECHARGE_SUCCESS.getStatus());
                 //                测试数据GOERLI
+                if(userLevel.compareTo(evmUserWalletMapper.getUserLevel(appUserMapper.findUserIdByUserAddress(userAddress)))<=0){
+                    continue;
+                }
                 UpdateWrapper<EvmUserWallet> updateWrapper = Wrappers.update();
                 updateWrapper.lambda()
                         .set(EvmUserWallet::getUserAddress, userAddress)
@@ -190,6 +196,9 @@ public class EventManager {
                 tradeManager.evmRecharge(userAddress, rechargeAmount, userLevel, ChainTypeEnum.BSCTEST.getChainId(), RechargeStatusEnum.RECHARGE_SUCCESS.getStatus());
                 //                测试数据BSCTESTNET
                 //                测试数据GOERLI
+                if(userLevel.compareTo(evmUserWalletMapper.getUserLevel(appUserMapper.findUserIdByUserAddress(userAddress)))<=0){
+                    continue;
+                }
                 UpdateWrapper<EvmUserWallet> updateWrapper = Wrappers.update();
                 updateWrapper.lambda()
                         .set(EvmUserWallet::getUserAddress, userAddress)

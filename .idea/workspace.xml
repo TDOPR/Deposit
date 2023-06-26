@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="586b7053-add2-4ada-9c13-dbae4959cbb9" name="Changes" comment="" />
+    <list default="true" id="586b7053-add2-4ada-9c13-dbae4959cbb9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/controller/RecordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/controller/RecordController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/manager/EventManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/manager/EventManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/controller/RecordController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/controller/RecordController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/enums/AlgebraEnum.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/enums/AlgebraEnum.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/manager/EventManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/manager/EventManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/mapper/AppUserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/mapper/AppUserMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/mapper/EvmUserWalletMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/mapper/EvmUserWalletMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/service/impl/WalletsServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/service/impl/WalletsServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mappers/AppUserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mappers/AppUserMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mappers/EvmUserWalletMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mappers/EvmUserWalletMapper.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,6 +36,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="fk20f9fb" />
   </component>
@@ -29,6 +46,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2QpMen8rYm5yFUFjPogTdEkzoF0" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -43,6 +61,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;last_opened_file_path&quot;: &quot;E:/request/newProject/Deposit/src/main/java/com/pp/config&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15820312&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
@@ -108,7 +127,8 @@
       <workItem from="1686847811957" duration="17742000" />
       <workItem from="1686898051101" duration="18292000" />
       <workItem from="1687063598438" duration="4776000" />
-      <workItem from="1687068388846" duration="57473000" />
+      <workItem from="1687068388846" duration="64003000" />
+      <workItem from="1687743986166" duration="7486000" />
     </task>
     <servers />
   </component>

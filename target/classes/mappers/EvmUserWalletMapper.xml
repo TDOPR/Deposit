@@ -8,4 +8,18 @@
         WHERE user_address=#{userAddress}
         AND chian_id=#{chainId}
     </update>
+
+    <select id="getUserLevel" resultType="java.lang.Integer">
+        SELECT
+        MAX(t.user_level)
+        FROM evm_user_wallet t
+        WHERE t.uid=#{userId}
+    </select>
+
+    <select id="getUserAddress" resultType="java.lang.Integer">
+        SELECT
+            t.user_address
+        FROM evm_user_wallet t
+        WHERE t.uid=#{userId}
+    </select>
 </mapper>

@@ -10,6 +10,10 @@
         SELECT  id from app_users where user_address=#{userAddress}
     </select>
 
+    <select id="findUserAddressByUserId" resultType="java.lang.String">
+        SELECT  user_address from app_users where id=#{userId}
+    </select>
+
 <!--    <select id="page" resultType="com.pp.model.vo.AppUsersVO"  parameterType="com.pp.model.condition.AppUsersCondition" >-->
 <!--        SELECT-->
 <!--        u.id,u.email,u.nickName,u.enabled,u.loginCount,u.level,u.createTime,u.inviteId parentId,u.teamTotalAmount subordinateAmount,-->

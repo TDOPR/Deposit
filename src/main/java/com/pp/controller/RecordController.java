@@ -1,6 +1,9 @@
 package com.pp.controller;
 
+import com.pp.mapper.AppUserMapper;
+import com.pp.mapper.EvmUserWalletMapper;
 import com.pp.mapper.WalletsMapper;
+import com.pp.model.dto.AppUserLoginDTO;
 import com.pp.model.dto.PageDTO;
 import com.pp.model.dto.RecordDTO;
 import com.pp.model.vo.PageVO;
@@ -23,6 +26,12 @@ public class RecordController {
     @Resource
     private WalletsMapper walletsMapper;
     
+    @Resource
+    private EvmUserWalletMapper evmUserWalletMapper;
+    
+    @Resource
+    private AppUserMapper appUserMapper;
+    
     /**
      * 奖励记录
      */
@@ -31,5 +40,15 @@ public class RecordController {
     @PostMapping("/record/{userAddress}")
     public JsonResult<PageVO<UserRecordVO>> record(@PathVariable String userAddress, @RequestBody PageDTO pageDTO) {
         return appUserService.getRecord(userAddress, pageDTO.getPage());
+    }
+    
+    /**
+     * 用户等级
+     */
+    @PrintLog
+    @RepeatSubmit
+    @PostMapping("/userLevel")
+    public JsonResult userLevel(@RequestBody AppUserLoginDTO appUserLoginDTO) {
+        return JsonResult.successResult(evmUserWalletMapper.getUserLevel(appUserMapper.findUserIdByUserAddress(appUserLoginDTO.getUserAddress())));
     }
 }
