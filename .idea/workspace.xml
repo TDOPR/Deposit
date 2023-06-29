@@ -5,19 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="586b7053-add2-4ada-9c13-dbae4959cbb9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/enums/LevelEnum.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/controller/RecordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/controller/RecordController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/manager/EventManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/manager/EventManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/controller/RecordController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/controller/RecordController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/enums/AlgebraEnum.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/enums/AlgebraEnum.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/manager/EventManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/manager/EventManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/mapper/AppUserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/mapper/AppUserMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/mapper/EvmUserWalletMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/mapper/EvmUserWalletMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/service/impl/WalletsServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/service/impl/WalletsServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mappers/AppUserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mappers/AppUserMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mappers/EvmUserWalletMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mappers/EvmUserWalletMapper.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,6 +71,7 @@
       <recent name="E:\request\newProject\Deposit\src\main\resources\i18n\Resource Bundle 'messages'" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.pp.enums" />
       <recent name="com.pp.mapper" />
       <recent name="com.pp.service.impl" />
       <recent name="com.pp.service" />
@@ -128,11 +119,22 @@
       <workItem from="1686898051101" duration="18292000" />
       <workItem from="1687063598438" duration="4776000" />
       <workItem from="1687068388846" duration="64003000" />
-      <workItem from="1687743986166" duration="7486000" />
+      <workItem from="1687743986166" duration="29697000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

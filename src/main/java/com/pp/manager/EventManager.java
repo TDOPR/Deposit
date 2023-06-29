@@ -4,14 +4,11 @@ import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.pp.enums.FlowingActionEnum;
-import com.pp.enums.FlowingTypeEnum;
+import com.pp.enums.*;
 import com.pp.mapper.AppUserMapper;
 import com.pp.mapper.EvmUserWalletMapper;
 import com.pp.model.CoinConfig;
 import com.pp.model.EvmEvent;
-import com.pp.enums.ChainTypeEnum;
-import com.pp.enums.RechargeStatusEnum;
 import com.pp.mapper.CoinConfigDao;
 import com.pp.model.EvmUserWallet;
 import com.pp.service.*;
@@ -53,7 +50,7 @@ public class EventManager {
     private TradeManager tradeManager;
     
     @Autowired
-    private  EvmUserWalletService evmUserWalletService;
+    private EvmUserWalletService evmUserWalletService;
     
     @Resource
     private AppUserMapper appUserMapper;
@@ -94,7 +91,7 @@ public class EventManager {
     }
     
     private void executeETHOneBlock(BigInteger oldBlock, BigInteger toBlock) throws Exception {
-    
+        
         CoinConfig eventConfig = coinConfigService.getOne(
                 new LambdaQueryWrapper<CoinConfig>()
                         .select(CoinConfig::getContract)
@@ -123,11 +120,11 @@ public class EventManager {
             
             if (eventName.equalsIgnoreCase(buyNodeCreated)) {
                 String userAddress = "0x" + topics.get(1).toString().substring(2).replace("000000000000000000000000", "");
-                BigDecimal rechargeAmount = new BigDecimal(new BigInteger(topics.get(2).toString().substring(2),16));
-                Integer userLevel = new Integer(new BigInteger(topics.get(3).toString().substring(2),16).toString());
+                BigDecimal rechargeAmount = new BigDecimal(new BigInteger(topics.get(2).toString().substring(2), 16));
+                Integer userLevel = new Integer(new BigInteger(topics.get(3).toString().substring(2), 16).toString());
                 tradeManager.evmRecharge(userAddress, rechargeAmount, userLevel, ChainTypeEnum.GOERLI.getChainId(), RechargeStatusEnum.RECHARGE_SUCCESS.getStatus());
                 //                测试数据GOERLI
-                if(userLevel.compareTo(evmUserWalletMapper.getUserLevel(appUserMapper.findUserIdByUserAddress(userAddress)))<=0){
+                if (userLevel.compareTo(evmUserWalletMapper.getUserLevel(appUserMapper.findUserIdByUserAddress(userAddress))) <= 0 || LevelEnum.getRechargeAmountByLevel(userLevel).compareTo(evmUserWalletMapper.getRechargeAmount(appUserMapper.findUserIdByUserAddress(userAddress)).add(rechargeAmount)) > 0) {
                     continue;
                 }
                 UpdateWrapper<EvmUserWallet> updateWrapper = Wrappers.update();
@@ -160,18 +157,18 @@ public class EventManager {
     }
     
     private void executeBscOneBlock(BigInteger oldBlock, BigInteger toBlock) throws Exception {
-    
+        
         CoinConfig eventConfig = coinConfigService.getOne(
                 new LambdaQueryWrapper<CoinConfig>()
                         .select(CoinConfig::getContract)
                         .eq(CoinConfig::getCoinType, "EVENT")
                         .eq(CoinConfig::getChainId, ChainTypeEnum.BSC.getChainId())
         );
-    
+        
         String eventContract = eventConfig.getContract();
-    
+        
         String buyNodeCreated = erc20BSCWalletHandleService.createBuyNodeEvent();
-    
+        
         EthFilter ethFilter = erc20BSCWalletHandleService.createFilter(oldBlock, toBlock, eventContract);
         ethFilter.addOptionalTopics(buyNodeCreated);
         List<Log> logsList = erc20BSCWalletHandleService.getLogByFilter(ethFilter);
@@ -187,16 +184,16 @@ public class EventManager {
             ArrayList topics = (ArrayList) logsLog.getTopics();
             String eventName = topics.get(0).toString();
             String data = logsLog.getData();
-        
+            
             if (eventName.equalsIgnoreCase(buyNodeCreated)) {
                 String userAddress = "0x" + topics.get(1).toString().substring(2).replace("000000000000000000000000", "");
-                BigDecimal rechargeAmount = new BigDecimal(new BigInteger(topics.get(2).toString().substring(2),16));
-                Integer userLevel = new Integer(new BigInteger(topics.get(3).toString().substring(2),16).toString());
+                BigDecimal rechargeAmount = new BigDecimal(new BigInteger(topics.get(2).toString().substring(2), 16));
+                Integer userLevel = new Integer(new BigInteger(topics.get(3).toString().substring(2), 16).toString());
                 /*测试数据*/
                 tradeManager.evmRecharge(userAddress, rechargeAmount, userLevel, ChainTypeEnum.BSCTEST.getChainId(), RechargeStatusEnum.RECHARGE_SUCCESS.getStatus());
                 //                测试数据BSCTESTNET
                 //                测试数据GOERLI
-                if(userLevel.compareTo(evmUserWalletMapper.getUserLevel(appUserMapper.findUserIdByUserAddress(userAddress)))<=0){
+                if (userLevel.compareTo(evmUserWalletMapper.getUserLevel(appUserMapper.findUserIdByUserAddress(userAddress))) <= 0 || LevelEnum.getRechargeAmountByLevel(userLevel).compareTo(evmUserWalletMapper.getRechargeAmount(appUserMapper.findUserIdByUserAddress(userAddress)).add(rechargeAmount)) > 0) {
                     continue;
                 }
                 UpdateWrapper<EvmUserWallet> updateWrapper = Wrappers.update();
@@ -210,7 +207,7 @@ public class EventManager {
                 String blockHash = logsLog.getBlockHash();
                 EthBlock.Block ethBlock = erc20BSCWalletHandleService.getBlockByHash(blockHash);
                 Date date = new Date(ethBlock.getTimestamp().intValue() * 1000L);
-            
+                
                 EvmEvent ethScanDataEntity = EvmEvent.builder()
                         .txHash(txHash)
                         .blockNum(new BigInteger(logsLog.getBlockNumber().toString(10)))
@@ -223,4 +220,5 @@ public class EventManager {
         if (CollectionUtil.isNotEmpty(evmEventEntityArrayList)) {
             evmEventService.saveBatch(evmEventEntityArrayList);
         }
-}}
+    }
+}
