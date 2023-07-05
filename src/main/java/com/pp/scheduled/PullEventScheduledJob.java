@@ -1,6 +1,7 @@
 package com.pp.scheduled;
 
 import com.pp.manager.EventManager;
+import com.pp.manager.TronEventManager;
 import com.pp.utils.annotation.RedisLock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class PullEventScheduledJob {
     @Autowired
     private EventManager eventManager;
     
+    @Autowired
+    private TronEventManager tronEventManager;
+    
     /**
      * 区块链 每隔3秒拉取事务
      */
@@ -36,5 +40,12 @@ public class PullEventScheduledJob {
     public void analyzeBSCEvent() throws Exception{
         
         eventManager.analyzeBSCEvent();
+    }
+    
+    @Scheduled(fixedDelay = 1000)
+    @RedisLock
+    public void analyzeTRONEvent() throws Exception{
+    
+        tronEventManager.analyzeTRONEvent();
     }
 }

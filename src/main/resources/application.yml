@@ -105,6 +105,33 @@ token:
   #钱包地址
   web3Wallet: 11f88eb3a9b868670c01a5582652ed69437479133d226f33c6117f9a3f53b180
 
+  #ChainIds
+  chainIds:
+    #以太坊链id
+    - ETH: 1
+    #BSC链id
+    - BSC: 1
+    #TRON链id
+    - TRON: 1
+
+#Tron
+tron:
+  #事务合约地址
+  eventContract: "TPUBjsQNoAyVuxJmg1n8pKjA4YtejbGy3L"
+  #区块间隔
+  blockDiff: 15
+  #最新区块url
+  urlLastBlock: "https://api.trongrid.io/wallet/getnowblock"
+
+#ChainIds
+chainIds:
+  #以太坊链id
+  - ETH: 1
+  #BSC链id
+  - BSC: 56
+  #TRON链id
+  - TRON: 10001
+
 #-------------  测试环境  配置  ---------------
 ---
 spring:

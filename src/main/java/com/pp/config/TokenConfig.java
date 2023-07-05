@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.List;
+
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "token")
@@ -26,4 +28,10 @@ public class TokenConfig {
      * 钱包账号
      */
     private String web3Wallet;
+    
+    /**
+     * 链id数组
+     */
+    private List<Integer> chainIds;
+    
 }
