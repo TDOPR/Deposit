@@ -42,6 +42,11 @@ eth:
 logging:
   config: classpath:logback-spring.xml
 
+trx:
+  enabled: true
+  method:
+    transfer: "transfer(address,uint256)"
+  tron-pro-api-key: "c716e1d9-4117-4636-8027-016e45e63e7e"
 #########################  java Web Token 配置  #########################
 jwt:
   # 加密密钥
@@ -101,36 +106,42 @@ token:
   #web3BSC服务地址
   web3BscServiceUrl: https://bsc-testnet.publicnode.com
   #web3TRON服务地址
-  web3TronServiceUrl: https://bsc-testnet.publicnode.com
+#  web3TronServiceUrl: https://bsc-testnet.publicnode.com
   #钱包地址
   web3Wallet: 11f88eb3a9b868670c01a5582652ed69437479133d226f33c6117f9a3f53b180
 
-  #ChainIds
-  chainIds:
-    #以太坊链id
-    - ETH: 1
-    #BSC链id
-    - BSC: 1
-    #TRON链id
-    - TRON: 1
+#ChainIds
+chainids:
+  #以太坊链id
+  ETH: 5
+  #BSC链id
+  BSC: 97
+  #TRON链id
+  TRON: 0
 
 #Tron
 tron:
   #事务合约地址
-  eventContract: "TPUBjsQNoAyVuxJmg1n8pKjA4YtejbGy3L"
+  eventContract: "THg43Ya8AapZBGx33r7hsBGuri1dJsj2D3"
   #区块间隔
   blockDiff: 15
   #最新区块url
-  urlLastBlock: "https://api.trongrid.io/wallet/getnowblock"
+  urlLastBlock: https://nile.trongrid.io/wallet/getnowblock
+  #firstUrl
+  firstUrl: "https://nile.trongrid.io/v1/contracts/"
+  #lastUrl
+  lastUrl: "/events?block_number="
+  #url
+  url: https://api.trongrid.io
 
-#ChainIds
-chainIds:
-  #以太坊链id
-  - ETH: 1
-  #BSC链id
-  - BSC: 56
-  #TRON链id
-  - TRON: 10001
+##ChainIds
+#chainIds:
+#  #以太坊链id
+#  - ETH: 1
+#  #BSC链id
+#  - BSC: 56
+#  #TRON链id
+#  - TRON: 10001
 
 #-------------  测试环境  配置  ---------------
 ---

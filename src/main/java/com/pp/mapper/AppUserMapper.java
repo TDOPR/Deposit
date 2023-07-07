@@ -6,7 +6,7 @@ import jnr.ffi.annotations.In;
 import org.apache.ibatis.annotations.Param;
 
 public interface AppUserMapper extends BaseMapper<AppUsers> {
-    Integer findUserIdByUserAddress(String userAddress);
+    Integer findUserIdByUserAddress(@Param("userAddress") String userAddress);
     
     String findUserAddressByUserId(@Param("userId") Integer userId);
 }

@@ -22,4 +22,11 @@
         FROM evm_user_wallet t
         WHERE t.uid=#{userId}
     </select>
+
+    <select id="getRechargeAmount" resultType="java.math.BigDecimal">
+        SELECT
+            SUM(t.recharge_amount)
+        FROM evm_user_wallet t
+        WHERE t.uid=#{userId}
+    </select>
 </mapper>

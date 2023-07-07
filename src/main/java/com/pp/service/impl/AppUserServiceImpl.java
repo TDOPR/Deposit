@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.pp.config.ChainIdsConfig;
 import com.pp.enums.ChainTypeEnum;
 import com.pp.enums.ReturnMessageEnum;
 import com.pp.mapper.AppUserMapper;
@@ -65,6 +66,9 @@ public class AppUserServiceImpl extends ServiceImpl<AppUserMapper, AppUsers> imp
     
     @Resource
     private  AppUserMapper appUserMapper;
+    
+    @Autowired
+    ChainIdsConfig chainIdsConfig;
     
     @Override
     public JsonResult<AppTokenVO> login(AppUserLoginDTO appUserLoginDTO, String localIp) {
@@ -154,15 +158,18 @@ public class AppUserServiceImpl extends ServiceImpl<AppUserMapper, AppUsers> imp
             EvmUserWallet evmUserWalletTRON = new EvmUserWallet();
             evmUserWalletETH.setUserId(appUsers.getId());
             evmUserWalletETH.setUserLevel(Integer.valueOf(0));
-            evmUserWalletETH.setChainId(ChainTypeEnum.GOERLI.getChainId());
+            evmUserWalletETH.setChainId(chainIdsConfig.getEth());
+            evmUserWalletETH.setRechargeAmount(BigDecimal.ZERO);
             evmUserWalletService.save(evmUserWalletETH);
             evmUserWalletBSC.setUserId(appUsers.getId());
             evmUserWalletBSC.setUserLevel(Integer.valueOf(0));
-            evmUserWalletBSC.setChainId(ChainTypeEnum.BSCTEST.getChainId());
+            evmUserWalletBSC.setChainId(chainIdsConfig.getBsc());
+            evmUserWalletBSC.setRechargeAmount(BigDecimal.ZERO);
             evmUserWalletService.save(evmUserWalletBSC);
             evmUserWalletTRON.setUserId(appUsers.getId());
             evmUserWalletTRON.setUserLevel(Integer.valueOf(0));
-            evmUserWalletTRON.setChainId(ChainTypeEnum.TRON.getChainId());
+            evmUserWalletTRON.setChainId(chainIdsConfig.getTron());
+            evmUserWalletTRON.setRechargeAmount(BigDecimal.ZERO);
             evmUserWalletService.save(evmUserWalletTRON);
             //创建一条钱包记录
             Wallets wallets = new Wallets();

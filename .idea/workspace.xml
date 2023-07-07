@@ -5,27 +5,47 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="586b7053-add2-4ada-9c13-dbae4959cbb9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/walletcli_1_8.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/walletcli-1.8.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/feign/TronFullNodeFeign.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/feign/TronFullNodeFeignTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/feign/dt/GetTransactionSign.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/feign/dt/TriggerSmartContract.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/feign/result/TranscationByIdView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/manager/TronEventManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/Tron20Service.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/utils/Help.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/utils/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/utils/Sha256Hash.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/utils/TronUiltNew.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/utils/TronUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/netty_common_4_1_70_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/netty_transport_4_1_70_Final_deposit.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/walletcli_1_8_deposit.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/walletcli_1_8_deposit__2_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/walletcli_1_8_deposit__3_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/walletcli_1_8_deposit__4_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/condition/TRXEnableCondition.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/config/ChainIdsConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/config/TronConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/exception/CException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/exception/HttpRequestException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/utils/HttpClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/utils/TronUtilss.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/walletcli_1_8.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/walletcli-1.8.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/walletcli-1.8-deposit.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/DepositApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/DepositApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/config/TokenConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/config/TokenConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/feign/TronFullNodeFeign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/feign/TronFullNodeFeign.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/feign/TronFullNodeFeignTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/feign/TronFullNodeFeignTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/manager/EventManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/manager/EventManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/manager/TronEventManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/manager/TronEventManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/mapper/AppUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/mapper/AppUserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/mapper/CoinConfigDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/mapper/CoinConfigDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/scheduled/PullEventScheduledJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/scheduled/PullEventScheduledJob.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/service/Tron20Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/Tron20Service.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/service/impl/AppUserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/impl/AppUserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mappers/EvmTokenCoinConfigDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mappers/EvmTokenCoinConfigDao.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/DepositApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/DepositApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/config/TokenConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/config/TokenConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/manager/EventManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/manager/EventManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/mapper/CoinConfigDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/mapper/CoinConfigDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/mapper/EvmUserWalletMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/mapper/EvmUserWalletMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/scheduled/PullEventScheduledJob.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/scheduled/PullEventScheduledJob.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/service/impl/AppUserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/service/impl/AppUserServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mappers/EvmTokenCoinConfigDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mappers/EvmTokenCoinConfigDao.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mappers/EvmUserWalletMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mappers/EvmUserWalletMapper.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,11 +67,17 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$MAVEN_REPOSITORY$/io/netty/netty-resolver-dns/4.1.70.Final/netty-resolver-dns-4.1.70.Final-sources.jar!/io/netty/resolver/dns/DnsServerAddresses.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="fk20f9fb" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2QpMen8rYm5yFUFjPogTdEkzoF0" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -61,6 +87,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -69,11 +99,11 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "E:/request/newProject/Deposit/src/main/java/com/pp",
+    "last_opened_file_path": "E:/request/newProject/Deposit/lib",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15820312",
-    "project.structure.side.proportion": "0.0",
+    "project.structure.side.proportion": "0.4599303",
     "spring.configuration.checksum": "92f80bd57592af65188ca27786514cca",
     "vue.rearranger.settings.migration": "true"
   }
@@ -83,9 +113,9 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\request\newProject\Deposit\lib" />
       <recent name="E:\request\newProject\Deposit\src\main\java\com\pp" />
       <recent name="E:\request\newProject\Deposit\src" />
-      <recent name="E:\request\newProject\Deposit\lib" />
       <recent name="E:\request\newProject\Deposit" />
       <recent name="E:\request\newProject\Deposit\src\main\java\com\pp\config" />
     </key>
@@ -94,13 +124,26 @@
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.pp.utils" />
+      <recent name="com.pp.condition" />
+      <recent name="com.pp.config" />
       <recent name="com.pp.service" />
       <recent name="com.pp.enums" />
-      <recent name="com.pp.mapper" />
-      <recent name="com.pp.service.impl" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.DepositApplication">
+    <configuration name="EthereumToBOSaddress" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.pp.utils.EthereumToBOSaddress" />
+      <module name="Deposit" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.pp.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="RandomUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.pp.utils.RandomUtil" />
       <module name="Deposit" />
@@ -123,6 +166,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.EthereumToBOSaddress" />
         <item itemvalue="Application.RandomUtil" />
       </list>
     </recent_temporary>
@@ -143,7 +187,10 @@
       <workItem from="1687063598438" duration="4776000" />
       <workItem from="1687068388846" duration="64003000" />
       <workItem from="1687743986166" duration="51267000" />
-      <workItem from="1688542963511" duration="7635000" />
+      <workItem from="1688542963511" duration="19303000" />
+      <workItem from="1688625251268" duration="5886000" />
+      <workItem from="1688631409801" duration="715000" />
+      <workItem from="1688632136892" duration="24603000" />
     </task>
     <servers />
   </component>
@@ -160,5 +207,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/pp/manager/EventManager.java</url>
+          <line>69</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

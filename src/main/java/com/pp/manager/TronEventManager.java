@@ -4,13 +4,22 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.pp.config.ChainIdsConfig;
 import com.pp.config.TokenConfig;
+import com.pp.config.TronConfig;
+import com.pp.enums.FlowingActionEnum;
+import com.pp.enums.FlowingTypeEnum;
+import com.pp.enums.LevelEnum;
 import com.pp.enums.RechargeStatusEnum;
+import com.pp.mapper.AppUserMapper;
+import com.pp.mapper.CoinConfigDao;
+import com.pp.mapper.EvmUserWalletMapper;
 import com.pp.model.CoinConfig;
 import com.pp.model.EvmEvent;
-import com.pp.service.CoinConfigService;
-import com.pp.service.EvmEventService;
-import com.pp.service.Tron20Service;
+import com.pp.model.EvmUserWallet;
+import com.pp.service.*;
 import com.pp.utils.Help;
 import com.pp.utils.R;
 import com.pp.utils.TronUiltNew;
@@ -19,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,28 +55,47 @@ public class TronEventManager {
     private TokenConfig tokenConfig;
     
     @Autowired
+    private TronConfig tronConfig;
+    
+    @Autowired
     private TradeManager tradeManager;
     
-    private final static String EVENT_CONTRACT = "TPUBjsQNoAyVuxJmg1n8pKjA4YtejbGy3L";
+    @Autowired
+    private ChainIdsConfig chainIdsConfig;
     
-    private final static BigInteger BLOCK_DIFF = new BigInteger("15");
+    @Resource
+    private EvmUserWalletMapper evmUserWalletMapper;
     
-    private static String URL_LAST_BLOCK = "https://api.trongrid.io/wallet/getnowblock";
+    @Resource
+    private  AppUserMapper appUserMapper;
+    
+    @Autowired
+    private EvmUserWalletService evmUserWalletService;
+    
+    @Autowired
+    private WalletsService walletsService;
+    
+    @Resource
+    private CoinConfigDao coinConfigDao;
+    
+//    private final static String EVENT_CONTRACT = "TPUBjsQNoAyVuxJmg1n8pKjA4YtejbGy3L";
+//
+//    private final static BigInteger BLOCK_DIFF = new BigInteger("15");
+//
+//    private static String URL_LAST_BLOCK = "https://api.trongrid.io/wallet/getnowblock";
     
     public void analyzeTRONEvent() throws Exception {
         //获取事务
-        String contractAddress = EVENT_CONTRACT;
-        QueryWrapper<CoinConfig> coinConfigEntityQueryWrapper = new QueryWrapper<>();
-        coinConfigEntityQueryWrapper.eq("coin_type", "EVENT");
-        coinConfigEntityQueryWrapper.eq("chain_id", tokenConfig.getChainIds().get(2));
-        BigInteger blockNumber = coinConfigService.getOne(coinConfigEntityQueryWrapper).getBlockNo();
+        String contractAddress = tronConfig.getEventContract();
+        CoinConfig scanDataConfig = coinConfigDao.getScanDataConfig(chainIdsConfig.getTron());
+        BigInteger blockNumber = scanDataConfig.getBlockNo();
         blockNumber = blockNumber.add(BigInteger.ONE);
         //获取当前最新区块
-        String blockStr = this.doGet(URL_LAST_BLOCK);
+        String blockStr = this.doGet(tronConfig.getUrlLastBlock());
         TronUiltNew.BlockResultBean blockInfo = (TronUiltNew.BlockResultBean) JSON.parseObject(blockStr, TronUiltNew.BlockResultBean.class);
         BigInteger currentBlock = new BigInteger(blockInfo.block_header.raw_data.number + "");
-        if (currentBlock.compareTo(blockNumber.add(BLOCK_DIFF)) == 1) {
-            String url = "https://api.trongrid.io/v1/contracts/" + contractAddress + "/events?block_number=" + blockNumber.toString();
+        if (currentBlock.compareTo(blockNumber.add(new BigInteger(tronConfig.getBlockDiff().toString()))) == 1) {
+            String url = tronConfig.getFirstUrl() + contractAddress + tronConfig.getLastUrl() + blockNumber.toString();
             
             //根据事务处理逻辑
             String res = this.doGet(url);
@@ -76,13 +105,29 @@ public class TronEventManager {
                 JSONObject eventObj = JSONObject.parseObject(events.get(i).toString());
                 String eventName = eventObj.get("event_name").toString();
                 JSONObject eventParams = JSONObject.parseObject(eventObj.get("result").toString());
-                String userAddress = TronUtils.fromHexAddress("41" + eventParams.get(0).toString().substring(2));
-                BigDecimal rechargeAmount = new BigDecimal(new BigInteger("41" + eventParams.get(1).toString().substring(2)));
+                String userAddress = TronUtils.fromHexAddress("41" + eventParams.get(0).toString().substring(2)).toLowerCase();
+                BigDecimal rechargeAmount = new BigDecimal(eventParams.get(1).toString());
                 Integer userLevel = new Integer(eventParams.get(2).toString());
-                tradeManager.evmRecharge(userAddress, rechargeAmount, userLevel, tokenConfig.getChainIds().get(2), RechargeStatusEnum.RECHARGE_SUCCESS.getStatus());
+//                tradeManager.evmRecharge(userAddress, rechargeAmount, userLevel, chainIdsConfig.getTron(), RechargeStatusEnum.RECHARGE_SUCCESS.getStatus());
                 EvmEvent eventEntity = new EvmEvent();
-                if (eventName.equals("buyNodeCreated")) {
-//                    this.buyPower(addr, inviteAddr, amount, 0);
+                if (eventName.equals("BuyNode")) {
+                    tradeManager.evmRecharge(userAddress, rechargeAmount, userLevel, chainIdsConfig.getTron(), RechargeStatusEnum.RECHARGE_SUCCESS.getStatus());
+//                    Integer a = evmUserWalletMapper.getUserLevel(appUserMapper.findUserIdByUserAddress(userAddress));
+//                    BigDecimal b = LevelEnum.getRechargeAmountByLevel(userLevel);
+//                    BigDecimal c = evmUserWalletMapper.getRechargeAmount(appUserMapper.findUserIdByUserAddress(userAddress));
+                    
+                    if (userLevel.compareTo(evmUserWalletMapper.getUserLevel(appUserMapper.findUserIdByUserAddress(userAddress))) <= 0 || LevelEnum.getRechargeAmountByLevel(userLevel).compareTo(evmUserWalletMapper.getRechargeAmount(appUserMapper.findUserIdByUserAddress(userAddress)).add(rechargeAmount)) > 0) {
+                        continue;
+                    }
+                    UpdateWrapper<EvmUserWallet> updateWrapper = Wrappers.update();
+                    updateWrapper.lambda()
+                            .set(EvmUserWallet::getUserAddress, userAddress)
+                            .set(EvmUserWallet::getUserLevel, userLevel)
+                            .eq(EvmUserWallet::getUserId, appUserMapper.findUserIdByUserAddress(userAddress)).eq(EvmUserWallet::getChainId, chainIdsConfig.getTron());
+                    evmUserWalletService.update(updateWrapper);
+                    walletsService.updateWallet(userAddress, rechargeAmount, FlowingActionEnum.INCOME, FlowingTypeEnum.RECHARGE, chainIdsConfig.getTron());
+                    
+                    
                     log.info("当前扫描到的区块是" + blockNumber);
     
                     eventEntity.setBlockNum(blockNumber);
@@ -103,74 +148,72 @@ public class TronEventManager {
                 }
             }
             //更新事务处理块no
-            CoinConfig coinConfig = new CoinConfig();
-            coinConfig.setId(4);
-            coinConfig.setBlockNo(blockNumber);
-            coinConfigService.updateById(coinConfig);
+            coinConfigDao.updateActionSeqById(scanDataConfig.getId(), blockNumber);
+            log.info("当前扫描到的区块是" + blockNumber);
         }
     }
     
-    public R debugAnalyzeEvent(String txHash) throws Exception {
-        //获取事务
-        String contractAddress = EVENT_CONTRACT;
-        //根据hash查询区块号
-        R infoResult = tron20Service.getConfirmedTransaction(txHash);
-        if (Help.isNotNull(infoResult) && "0".equals(infoResult.get("code").toString())) {
-            String blockNumber = infoResult.get("data").toString();
-            //查看是否处理过该区块
-            QueryWrapper<EvmEvent> eventEntityQueryWrapper = new QueryWrapper<>();
-            eventEntityQueryWrapper.eq("block_num", blockNumber);
-            EvmEvent checkEventEntity = eventService.getOne(eventEntityQueryWrapper);
-            if (Help.isNotNull(checkEventEntity)) {
-                return R.error("该交易已完成，不可重复添加");
-            }
-            //查看该区块是否领先系统区块
-            QueryWrapper<CoinConfig> coinConfigEntityQueryWrapper = new QueryWrapper<>();
-            coinConfigEntityQueryWrapper.eq("coin", "EVENT");
-            CoinConfig coinConfig = coinConfigService.getOne(coinConfigEntityQueryWrapper);
-            if (new BigInteger(blockNumber).compareTo(coinConfig.getBlockNo()) > -1) {
-                return R.error("该交易系统还未扫描到，请耐心等待扫描，暂时无法手动添加");
-            }
-            //获取当前区块事务
-            String url = "https://api.trongrid.io/v1/contracts/" + contractAddress + "/events?block_number=" + blockNumber.toString();
-            //根据事务处理逻辑
-            String res = this.doGet(url);
-            JSONObject data = JSONObject.parseObject(res);
-            JSONArray events = data.getJSONArray("data");
-            for (int i = 0; i < events.size(); i++) {
-                JSONObject eventObj = JSONObject.parseObject(events.get(i).toString());
-                String eventName = eventObj.get("event_name").toString();
-                JSONObject eventParams = JSONObject.parseObject(eventObj.get("result").toString());
-                String addr = TronUtils.fromHexAddress("41" + eventParams.get(0).toString().substring(2));
-                String inviteAddr = TronUtils.fromHexAddress("41" + eventParams.get(1).toString().substring(2));
-                String amount = eventParams.get(2).toString();
-                EvmEvent eventEntity = new EvmEvent();
-                if (eventName.equals("BuyPowerOne")) {
-//                    this.buyPower(addr, inviteAddr, amount, 0);
-                    log.info("当前扫描到的区块是" + blockNumber);
-                    
-                    eventEntity.setBlockNum(new BigInteger(blockNumber));
-                } else if (eventName.equals("BuyPowerTwo")) {
-//                    this.buyPower(addr, inviteAddr, amount, 1);
-                    log.info("当前扫描到的区块是" + blockNumber);
-                    
-                    eventEntity.setBlockNum(new BigInteger(blockNumber));
-                } else if (eventName.equals("BuyLpPower")) {
-//                    this.buyLpPower(addr, inviteAddr, amount);
-                    log.info("当前扫描到的区块是" + blockNumber);
-                    
-//                    eventEntity.setBlockNum(blockNumber.toString());
-                }
-                if (Help.isNotNull(eventEntity)) {
-                    eventService.save(eventEntity);
-                    return R.ok("确认交易成功");
-                }
-            }
-            return R.error("交易hash非法，没有投入成功");
-        } else {
-            return R.error("交易hash错误，获取区块交易失败");
-        }
-    }
+//    public R debugAnalyzeEvent(String txHash) throws Exception {
+//        //获取事务
+//        String contractAddress = EVENT_CONTRACT;
+//        //根据hash查询区块号
+//        R infoResult = tron20Service.getConfirmedTransaction(txHash);
+//        if (Help.isNotNull(infoResult) && "0".equals(infoResult.get("code").toString())) {
+//            String blockNumber = infoResult.get("data").toString();
+//            //查看是否处理过该区块
+//            QueryWrapper<EvmEvent> eventEntityQueryWrapper = new QueryWrapper<>();
+//            eventEntityQueryWrapper.eq("block_num", blockNumber);
+//            EvmEvent checkEventEntity = eventService.getOne(eventEntityQueryWrapper);
+//            if (Help.isNotNull(checkEventEntity)) {
+//                return R.error("该交易已完成，不可重复添加");
+//            }
+//            //查看该区块是否领先系统区块
+//            QueryWrapper<CoinConfig> coinConfigEntityQueryWrapper = new QueryWrapper<>();
+//            coinConfigEntityQueryWrapper.eq("coin", "EVENT");
+//            CoinConfig coinConfig = coinConfigService.getOne(coinConfigEntityQueryWrapper);
+//            if (new BigInteger(blockNumber).compareTo(coinConfig.getBlockNo()) > -1) {
+//                return R.error("该交易系统还未扫描到，请耐心等待扫描，暂时无法手动添加");
+//            }
+//            //获取当前区块事务
+//            String url = "https://api.trongrid.io/v1/contracts/" + contractAddress + "/events?block_number=" + blockNumber.toString();
+//            //根据事务处理逻辑
+//            String res = this.doGet(url);
+//            JSONObject data = JSONObject.parseObject(res);
+//            JSONArray events = data.getJSONArray("data");
+//            for (int i = 0; i < events.size(); i++) {
+//                JSONObject eventObj = JSONObject.parseObject(events.get(i).toString());
+//                String eventName = eventObj.get("event_name").toString();
+//                JSONObject eventParams = JSONObject.parseObject(eventObj.get("result").toString());
+//                String addr = TronUtils.fromHexAddress("41" + eventParams.get(0).toString().substring(2));
+//                String inviteAddr = TronUtils.fromHexAddress("41" + eventParams.get(1).toString().substring(2));
+//                String amount = eventParams.get(2).toString();
+//                EvmEvent eventEntity = new EvmEvent();
+//                if (eventName.equals("BuyPowerOne")) {
+////                    this.buyPower(addr, inviteAddr, amount, 0);
+//                    log.info("当前扫描到的区块是" + blockNumber);
+//
+//                    eventEntity.setBlockNum(new BigInteger(blockNumber));
+//                } else if (eventName.equals("BuyPowerTwo")) {
+////                    this.buyPower(addr, inviteAddr, amount, 1);
+//                    log.info("当前扫描到的区块是" + blockNumber);
+//
+//                    eventEntity.setBlockNum(new BigInteger(blockNumber));
+//                } else if (eventName.equals("BuyLpPower")) {
+////                    this.buyLpPower(addr, inviteAddr, amount);
+//                    log.info("当前扫描到的区块是" + blockNumber);
+//
+////                    eventEntity.setBlockNum(blockNumber.toString());
+//                }
+//                if (Help.isNotNull(eventEntity)) {
+//                    eventService.save(eventEntity);
+//                    return R.ok("确认交易成功");
+//                }
+//            }
+//            return R.error("交易hash非法，没有投入成功");
+//        } else {
+//            return R.error("交易hash错误，获取区块交易失败");
+//        }
+//    }
     
     public static String doGet(String httpurl) {
         HttpURLConnection connection = null;

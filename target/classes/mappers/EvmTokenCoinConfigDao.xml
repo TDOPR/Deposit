@@ -29,25 +29,25 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM evm_token_coin_config
-        WHERE coin_type = 'EVENT' and chain_id = 1
+        WHERE coin_type = 'EVENT' and chain_id = #{chainId}
     </select>
     <select id="getBscScanDataConfig" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM evm_token_coin_config
-        WHERE coin_type = 'EVENT' and chain_id= 56
+        WHERE coin_type = 'EVENT' and chain_id= #{chainId}
     </select>
-    <select id="getEthDepositScanDataConfig" resultMap="BaseResultMap">
+    <select id="getDepositScanDataConfig" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM evm_token_coin_config
-        WHERE coin_type = 'DEPOSIT' and chain_id = 1
+        WHERE coin_type = 'DEPOSIT' and chain_id = #{chainId}
     </select>
     <select id="getBscDepositScanDataConfig" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM evm_token_coin_config
-        WHERE coin_type = 'DEPOSIT' and chain_id = 56
+        WHERE coin_type = 'DEPOSIT' and chain_id = #{chainId}
     </select>
     <update id="updateActionSeqById">
         UPDATE evm_token_coin_config

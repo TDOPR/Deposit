@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="netty-transport-4.1.70.Final-deposit">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport/4.1.70.Final/netty-transport-4.1.70.Final-deposit.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

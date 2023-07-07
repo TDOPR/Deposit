@@ -2,6 +2,7 @@ package com.pp.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
+import com.pp.config.TronConfig;
 import com.pp.feign.TronFullNodeFeign;
 import com.pp.feign.dt.GetTransactionSign;
 import com.pp.feign.dt.TriggerSmartContract;
@@ -34,13 +35,15 @@ import java.util.Map;
 @Slf4j
 public class Tron20Service {
 
-    @Value("${tron.contract-address}")
-    private String contractAddress;//hex格式
-
-    @Value("${tron.address}")
-    private String address;//发币地址 hex格式
+//    @Value("${tron.contract-address}")
+//    private String contractAddress;//hex格式
+//
+//    @Value("${tron.address}")
+//    private String address;//发币地址 hex格式
 
     //@Value("${gcp.private-key}")
+    @Autowired
+    TronConfig tronConfig;
     private String privateKey;//私钥
 
     //token的精度  就是小数点后面有多少位小数 然后1后面加多少个0就可以
@@ -133,8 +136,8 @@ public class Tron20Service {
      */
     private TriggerSmartContract.Param createTriggerSmartContractParam() {
         TriggerSmartContract.Param tscParam = new TriggerSmartContract.Param();
-        tscParam.setOwner_address(TronUtils.toHexAddress(address));
-        tscParam.setContract_address(TronUtils.toHexAddress(contractAddress));
+//        tscParam.setOwner_address(TronUtils.toHexAddress(address));
+        tscParam.setContract_address(TronUtils.toHexAddress(tronConfig.getEventContract()));
         tscParam.setFee_limit(1000000L);
         return tscParam;
     }

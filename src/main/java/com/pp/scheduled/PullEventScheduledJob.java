@@ -1,10 +1,13 @@
 package com.pp.scheduled;
 
+import com.pp.condition.TRXEnableCondition;
 import com.pp.manager.EventManager;
 import com.pp.manager.TronEventManager;
 import com.pp.utils.annotation.RedisLock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Conditional;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +20,7 @@ import java.time.Duration;
  **/
 @Slf4j
 @Component
+@EnableScheduling
 public class PullEventScheduledJob {
     
     @Autowired
@@ -31,19 +35,20 @@ public class PullEventScheduledJob {
     @Scheduled(fixedDelay = 6000)
     @RedisLock
     public void analyzeETHEvent() throws Exception{
-    
+
         eventManager.analyzeETHEvent();
     }
     
     @Scheduled(fixedDelay = 3000)
     @RedisLock
     public void analyzeBSCEvent() throws Exception{
-        
+
         eventManager.analyzeBSCEvent();
     }
     
     @Scheduled(fixedDelay = 1000)
     @RedisLock
+    @Conditional(TRXEnableCondition.class)
     public void analyzeTRONEvent() throws Exception{
     
         tronEventManager.analyzeTRONEvent();
