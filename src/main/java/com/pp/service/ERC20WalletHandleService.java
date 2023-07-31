@@ -37,6 +37,8 @@ public interface ERC20WalletHandleService {
      */
     TransactionReceipt getTransactionsByTxHash(String txHash);
     
+    String createTransferUsdtEvent();
+    
     /**
      * 创建filter对象
      *

@@ -5,47 +5,81 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="586b7053-add2-4ada-9c13-dbae4959cbb9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/netty_common_4_1_70_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/netty_transport_4_1_70_Final_deposit.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/walletcli_1_8_deposit.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/walletcli_1_8_deposit__2_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/walletcli_1_8_deposit__3_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/walletcli_1_8_deposit__4_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/condition/TRXEnableCondition.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/config/ChainIdsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/config/TronConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/exception/CException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/exception/HttpRequestException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/utils/HttpClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/utils/TronUtilss.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/walletcli_1_8.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/net_coobird_thumbnailator.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/constant/CarbonConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/enums/IntegralEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/enums/UsdLogTypeEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/enums/VipLevelEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/mapper/AppDonaUsersMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/mapper/CertificateMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/mapper/DonaEvmEventDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/mapper/DonaTransferUsdtMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/mapper/DonaUsersIntegralWalletsLogsMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/mapper/DonaUsersWalletsLogsMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/mapper/DonaUsersWalletsMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/model/AppDonaUsers.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/model/Certificate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/model/DonaEvmEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/model/DonaTransferUsdt.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/model/DonaUsersIntegralLogs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/model/DonaUsersWallets.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/model/DonaUsersWalletsLogs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/model/dto/AppDonaUserRegisterDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/model/dto/BindMailDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/model/dto/PaticiTaskDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/AppDonaUserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/CertificateService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/DonaEvmEventService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/DonaTransferUsdtService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/DonaUsersIntegralWalletsLogsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/DonaUsersWalletsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/DonaUsesrsWalletsLogsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/impl/AppDonaUserServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/impl/CertificateServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/impl/DonaEvmEventServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/impl/DonaTransferUsdtServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/impl/DonaUsersIntegralWalletsLogsServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/impl/DonaUsersWalletsLogsServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/impl/DonaUsersWalletsServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/impl/ThumbnailsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/utils/AESUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/utils/AppParamProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pp/utils/MyIncrementGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mappers/DonaEvmEventDao.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mappers/DonaUsersWalletsIntegralLogsMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mappers/DonaUsersWalletsLogsMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mappers/DonaUsersWalletsMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/walletcli-1.8.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/walletcli-1.8-deposit.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/DepositApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/DepositApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/config/TokenConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/config/TokenConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/feign/TronFullNodeFeign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/feign/TronFullNodeFeign.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/feign/TronFullNodeFeignTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/feign/TronFullNodeFeignTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/controller/RecordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/controller/RecordController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/enums/FlowingActionEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/enums/FlowingActionEnum.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/manager/EventManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/manager/EventManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/manager/TradeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/manager/TradeManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/manager/TronEventManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/manager/TronEventManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/mapper/AppUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/mapper/AppUserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/mapper/CoinConfigDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/mapper/CoinConfigDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/model/dto/FindPasswordDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/model/dto/FindPasswordDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/scheduled/PullEventScheduledJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/scheduled/PullEventScheduledJob.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/service/Tron20Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/Tron20Service.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/service/AppUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/AppUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/service/ERC20BSCWalletHandleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/ERC20BSCWalletHandleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/service/ERC20WalletHandleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/ERC20WalletHandleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/service/Tron20Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/impl/Tron20Service.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/service/impl/AppUserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/impl/AppUserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/service/impl/ERC20BSCWalletHandleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/impl/ERC20BSCWalletHandleServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/service/impl/ERC20WalletHandleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/service/impl/ERC20WalletHandleServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pp/utils/GlobalProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pp/utils/GlobalProperties.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mappers/EvmTokenCoinConfigDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mappers/EvmTokenCoinConfigDao.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/DepositApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/DepositApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/config/TokenConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/config/TokenConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/controller/RecordController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/controller/RecordController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/enums/FlowingActionEnum.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/enums/FlowingActionEnum.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/pp/manager/EventManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/manager/EventManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/mapper/CoinConfigDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/mapper/CoinConfigDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/mapper/EvmUserWalletMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/mapper/EvmUserWalletMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/manager/TradeManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/manager/TradeManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/manager/TronEventManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/manager/TronEventManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/pp/scheduled/PullEventScheduledJob.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/scheduled/PullEventScheduledJob.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/service/AppUserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/service/AppUserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/service/ERC20BSCWalletHandleService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/service/ERC20BSCWalletHandleService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/service/ERC20WalletHandleService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/service/ERC20WalletHandleService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/service/Tron20Service.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/pp/service/impl/AppUserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/service/impl/AppUserServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mappers/EvmTokenCoinConfigDao.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mappers/EvmTokenCoinConfigDao.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mappers/EvmUserWalletMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/mappers/EvmUserWalletMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/service/impl/ERC20BSCWalletHandleServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/service/impl/ERC20BSCWalletHandleServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pp/service/impl/ERC20WalletHandleServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pp/service/impl/ERC20WalletHandleServiceImpl.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +124,7 @@
     "Downloaded.Files.Path.Enabled": "false",
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
+    "Repository.Attach.Sources": "true",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -99,7 +133,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "E:/request/newProject/Deposit/lib",
+    "last_opened_file_path": "E:/request/newProject/Deposit/src/main/resources/mappers",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15820312",
@@ -113,20 +147,20 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\request\newProject\Deposit\lib" />
-      <recent name="E:\request\newProject\Deposit\src\main\java\com\pp" />
-      <recent name="E:\request\newProject\Deposit\src" />
-      <recent name="E:\request\newProject\Deposit" />
-      <recent name="E:\request\newProject\Deposit\src\main\java\com\pp\config" />
+      <recent name="E:\request\newProject\Deposit\src\main\resources\mappers" />
+      <recent name="E:\request\newProject\Deposit\src\main\java\com\pp\mapper" />
+      <recent name="E:\request\newProject\Deposit\src\main\java\com\pp\service" />
+      <recent name="E:\request\newProject\Deposit\src\main\java\com\pp\service\impl" />
+      <recent name="E:\request\newProject\Deposit\src\main\java\com\pp\model" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\request\newProject\Deposit\src\main\resources\i18n\Resource Bundle 'messages'" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.pp.utils" />
-      <recent name="com.pp.condition" />
-      <recent name="com.pp.config" />
+      <recent name="com.pp.mapper" />
+      <recent name="com.pp.model.dto" />
       <recent name="com.pp.service" />
+      <recent name="com.pp.service.impl" />
       <recent name="com.pp.enums" />
     </key>
   </component>
@@ -190,7 +224,9 @@
       <workItem from="1688542963511" duration="19303000" />
       <workItem from="1688625251268" duration="5886000" />
       <workItem from="1688631409801" duration="715000" />
-      <workItem from="1688632136892" duration="24603000" />
+      <workItem from="1688632136892" duration="72730000" />
+      <workItem from="1690183064820" duration="16542000" />
+      <workItem from="1690339903670" duration="11803000" />
     </task>
     <servers />
   </component>
@@ -207,16 +243,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/pp/manager/EventManager.java</url>
-          <line>69</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

@@ -3,6 +3,7 @@ package com.pp.scheduled;
 import com.pp.condition.TRXEnableCondition;
 import com.pp.manager.EventManager;
 import com.pp.manager.TronEventManager;
+import com.pp.utils.AppParamProperties;
 import com.pp.utils.annotation.RedisLock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,28 +30,37 @@ public class PullEventScheduledJob {
     @Autowired
     private TronEventManager tronEventManager;
     
+    @Autowired
+    private AppParamProperties appParamProperties;
+    
     /**
      * 区块链 每隔3秒拉取事务
      */
     @Scheduled(fixedDelay = 6000)
     @RedisLock
     public void analyzeETHEvent() throws Exception{
-
-        eventManager.analyzeETHEvent();
+        if (appParamProperties.isEnableQueryOrdersStatus()) {
+            eventManager.analyzeETHEvent();
+        }
+        
     }
     
     @Scheduled(fixedDelay = 3000)
     @RedisLock
     public void analyzeBSCEvent() throws Exception{
-
-        eventManager.analyzeBSCEvent();
+        if (appParamProperties.isEnableQueryOrdersStatus()) {
+            eventManager.analyzeBSCEvent();
+        }
+        
     }
     
     @Scheduled(fixedDelay = 1000)
     @RedisLock
     @Conditional(TRXEnableCondition.class)
     public void analyzeTRONEvent() throws Exception{
-    
-        tronEventManager.analyzeTRONEvent();
+        if (appParamProperties.isEnableQueryOrdersStatus()) {
+            tronEventManager.analyzeTRONEvent();
+        }
+        
     }
 }

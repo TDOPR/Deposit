@@ -8,8 +8,10 @@ import com.pp.config.ChainIdsConfig;
 import com.pp.config.TokenConfig;
 import com.pp.enums.*;
 import com.pp.mapper.AppUserMapper;
+import com.pp.mapper.DonaUsersWalletsMapper;
 import com.pp.mapper.EvmUserWalletMapper;
 import com.pp.model.CoinConfig;
+import com.pp.model.DonaEvmEvent;
 import com.pp.model.EvmEvent;
 import com.pp.mapper.CoinConfigDao;
 import com.pp.model.EvmUserWallet;
@@ -61,10 +63,23 @@ public class EventManager {
     private EvmUserWalletMapper evmUserWalletMapper;
     
     @Autowired
-    TokenConfig tokenConfig;
+    private TokenConfig tokenConfig;
     
     @Autowired
-    ChainIdsConfig chainIdsConfig;
+    private ChainIdsConfig chainIdsConfig;
+    
+    @Autowired
+    private DonaUsersWalletsService donaUsersWalletsService;
+    
+    @Autowired
+    private DonaUsesrsWalletsLogsService donaUsesrsWalletsLogsService;
+    
+    @Resource
+    private DonaUsersWalletsMapper donaUsersWalletsMapper;
+    
+    @Autowired
+    private DonaEvmEventService donaEvmEventService;
+    
     
     public void analyzeETHEvent() throws Exception {
         CoinConfig scanDataConfig = coinConfigDao.getScanDataConfig(chainIdsConfig.getEth());
@@ -110,14 +125,16 @@ public class EventManager {
         String eventContract = eventConfig.getContract();
         
         String buyNodeCreated = erc20WalletHandleService.createBuyNodeEvent();
+        String transferUsdtCreated = erc20WalletHandleService.createTransferUsdtEvent();
         
         EthFilter ethFilter = erc20WalletHandleService.createFilter(oldBlock, toBlock, eventContract);
-        ethFilter.addOptionalTopics(buyNodeCreated);
+        ethFilter.addOptionalTopics(buyNodeCreated, transferUsdtCreated);
         List<Log> logsList = erc20WalletHandleService.getLogByFilter(ethFilter);
         if (CollectionUtil.isEmpty(logsList)) {
             return;
         }
         List<EvmEvent> evmEventEntityArrayList = new ArrayList<>();
+        List<DonaEvmEvent> donaEvmEventEntityArrayList = new ArrayList<>();
         for (Log logsLog : logsList) {
             String txHash = logsLog.getTransactionHash();
             if (evmEventService.getEventExistByTxHash(txHash)) {
@@ -157,10 +174,27 @@ public class EventManager {
                         .chainId(tokenConfig.getChainIds().get(0))
                         .build();
                 evmEventEntityArrayList.add(ethScanDataEntity);
+            }else if(eventName.equalsIgnoreCase(transferUsdtCreated)){
+                String userAddress = "0x" + topics.get(1).toString().substring(2).replace("000000000000000000000000", "");
+                BigDecimal rechargeAmount = new BigDecimal(new BigInteger(topics.get(2).toString().substring(2), 16));
+                tradeManager.donaTransferUsdt(userAddress, rechargeAmount, chainIdsConfig.getEth());
+                donaUsersWalletsService.updateUsdWallet(donaUsersWalletsMapper.selectUserIdByAddress(userAddress), rechargeAmount, FlowingActionEnum.TRANSFER, UsdLogTypeEnum.RECHARGE);
+                String blockHash = logsLog.getBlockHash();
+                EthBlock.Block ethBlock = erc20WalletHandleService.getBlockByHash(blockHash);
+                Date date = new Date(ethBlock.getTimestamp().intValue() * 1000L);
+                DonaEvmEvent ethScanDataEntity = DonaEvmEvent.builder()
+                        .txHash(txHash)
+                        .blockNum(new BigInteger(logsLog.getBlockNumber().toString(10)))
+                        .createTime(date)
+                        .chainId(tokenConfig.getChainIds().get(0))
+                        .build();
+                donaEvmEventEntityArrayList.add(ethScanDataEntity);
             }
         }
         if (CollectionUtil.isNotEmpty(evmEventEntityArrayList)) {
             evmEventService.saveBatch(evmEventEntityArrayList);
+        }else if (CollectionUtil.isNotEmpty(donaEvmEventEntityArrayList)){
+            donaEvmEventService.saveBatch(donaEvmEventEntityArrayList);
         }
     }
     
@@ -176,14 +210,16 @@ public class EventManager {
         String eventContract = eventConfig.getContract();
         
         String buyNodeCreated = erc20BSCWalletHandleService.createBuyNodeEvent();
+        String transferUsdtCreated = erc20WalletHandleService.createTransferUsdtEvent();
         
         EthFilter ethFilter = erc20BSCWalletHandleService.createFilter(oldBlock, toBlock, eventContract);
-        ethFilter.addOptionalTopics(buyNodeCreated);
+        ethFilter.addOptionalTopics(buyNodeCreated, transferUsdtCreated);
         List<Log> logsList = erc20BSCWalletHandleService.getLogByFilter(ethFilter);
         if (CollectionUtil.isEmpty(logsList)) {
             return;
         }
         List<EvmEvent> evmEventEntityArrayList = new ArrayList<>();
+        List<DonaEvmEvent> donaEvmEventEntityArrayList = new ArrayList<>();
         for (Log logsLog : logsList) {
             String txHash = logsLog.getTransactionHash();
             if (evmEventService.getEventExistByTxHash(txHash)) {
@@ -223,6 +259,21 @@ public class EventManager {
                         .chainId(tokenConfig.getChainIds().get(1))
                         .build();
                 evmEventEntityArrayList.add(ethScanDataEntity);
+            }else if(eventName.equalsIgnoreCase(transferUsdtCreated)){
+                String userAddress = "0x" + topics.get(1).toString().substring(2).replace("000000000000000000000000", "");
+                BigDecimal rechargeAmount = new BigDecimal(new BigInteger(topics.get(2).toString().substring(2), 16));
+                tradeManager.donaTransferUsdt(userAddress, rechargeAmount, chainIdsConfig.getBsc());
+                donaUsersWalletsService.updateUsdWallet(donaUsersWalletsMapper.selectUserIdByAddress(userAddress), rechargeAmount, FlowingActionEnum.TRANSFER, UsdLogTypeEnum.RECHARGE);
+                String blockHash = logsLog.getBlockHash();
+                EthBlock.Block ethBlock = erc20WalletHandleService.getBlockByHash(blockHash);
+                Date date = new Date(ethBlock.getTimestamp().intValue() * 1000L);
+                DonaEvmEvent ethScanDataEntity = DonaEvmEvent.builder()
+                        .txHash(txHash)
+                        .blockNum(new BigInteger(logsLog.getBlockNumber().toString(10)))
+                        .createTime(date)
+                        .chainId(tokenConfig.getChainIds().get(0))
+                        .build();
+                donaEvmEventEntityArrayList.add(ethScanDataEntity);
             }
         }
         if (CollectionUtil.isNotEmpty(evmEventEntityArrayList)) {

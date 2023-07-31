@@ -20,14 +20,15 @@ public class GlobalProperties {
     
     private static boolean prodEnv;
     
+
     public static String getVirtualPathURL() {
         return virtualPathURL;
     }
     
-//    @Value("${app.virtualPathURL}")
-//    public  void setVirtualPathURL(String virtualPathURL) {
-//        GlobalProperties.virtualPathURL = virtualPathURL;
-//    }
+    @Value("${app.virtualPathURL}")
+    public  void setVirtualPathURL(String virtualPathURL) {
+        GlobalProperties.virtualPathURL = virtualPathURL;
+    }
     
     public static long getTokenExpire() {
         return tokenExpire;
@@ -51,17 +52,17 @@ public class GlobalProperties {
         return rootPath;
     }
     
-//    @Value("${app.rootPath}")
-//    public  void setRootPath(String rootPath) {
-//        GlobalProperties.rootPath = rootPath;
-//    }
+    @Value("${app.rootPath}")
+    public  void setRootPath(String rootPath) {
+        GlobalProperties.rootPath = rootPath;
+    }
     
     public static boolean isProdEnv() {
         return prodEnv;
     }
     
-//    @Value("${app.prodEnv:true}")
-//    public  void setProdEnv(boolean prodEnv) {
-//        GlobalProperties.prodEnv = prodEnv;
-//    }
+    @Value("${app.prodEnv:true}")
+    public  void setProdEnv(boolean prodEnv) {
+        GlobalProperties.prodEnv = prodEnv;
+    }
 }

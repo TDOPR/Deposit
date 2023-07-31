@@ -3,25 +3,23 @@ package com.pp.manager;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.pp.config.ChainIdsConfig;
 import com.pp.config.TokenConfig;
 import com.pp.config.TronConfig;
-import com.pp.enums.FlowingActionEnum;
-import com.pp.enums.FlowingTypeEnum;
-import com.pp.enums.LevelEnum;
-import com.pp.enums.RechargeStatusEnum;
+import com.pp.enums.*;
 import com.pp.mapper.AppUserMapper;
 import com.pp.mapper.CoinConfigDao;
+import com.pp.mapper.DonaUsersWalletsMapper;
 import com.pp.mapper.EvmUserWalletMapper;
 import com.pp.model.CoinConfig;
+import com.pp.model.DonaEvmEvent;
 import com.pp.model.EvmEvent;
 import com.pp.model.EvmUserWallet;
 import com.pp.service.*;
+import com.pp.service.impl.Tron20Service;
 import com.pp.utils.Help;
-import com.pp.utils.R;
 import com.pp.utils.TronUiltNew;
 import com.pp.utils.TronUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +44,10 @@ public class TronEventManager {
     private CoinConfigService coinConfigService;
     
     @Autowired
-    private EvmEventService eventService;
+    private EvmEventService evmEventService;
+    
+    @Autowired
+    private  DonaEvmEventService donaEvmEventService;
     
     @Autowired
     private Tron20Service tron20Service;
@@ -75,8 +76,14 @@ public class TronEventManager {
     @Autowired
     private WalletsService walletsService;
     
+    @Autowired
+    private DonaUsersWalletsService donaUsersWalletsService;
+    
     @Resource
     private CoinConfigDao coinConfigDao;
+    
+    @Resource
+    private DonaUsersWalletsMapper donaUsersWalletsMapper;
     
 //    private final static String EVENT_CONTRACT = "TPUBjsQNoAyVuxJmg1n8pKjA4YtejbGy3L";
 //
@@ -104,13 +111,15 @@ public class TronEventManager {
             for (int i = 0; i < events.size(); i++) {
                 JSONObject eventObj = JSONObject.parseObject(events.get(i).toString());
                 String eventName = eventObj.get("event_name").toString();
-                JSONObject eventParams = JSONObject.parseObject(eventObj.get("result").toString());
-                String userAddress = TronUtils.fromHexAddress("41" + eventParams.get(0).toString().substring(2)).toLowerCase();
-                BigDecimal rechargeAmount = new BigDecimal(eventParams.get(1).toString());
-                Integer userLevel = new Integer(eventParams.get(2).toString());
+                
 //                tradeManager.evmRecharge(userAddress, rechargeAmount, userLevel, chainIdsConfig.getTron(), RechargeStatusEnum.RECHARGE_SUCCESS.getStatus());
                 EvmEvent eventEntity = new EvmEvent();
+                DonaEvmEvent donaEvmEvent = new DonaEvmEvent();
                 if (eventName.equals("BuyNode")) {
+                    JSONObject eventParams = JSONObject.parseObject(eventObj.get("result").toString());
+                    String userAddress = TronUtils.fromHexAddress("41" + eventParams.get(0).toString().substring(2)).toLowerCase();
+                    BigDecimal rechargeAmount = new BigDecimal(eventParams.get(1).toString());
+                    Integer userLevel = new Integer(eventParams.get(2).toString());
                     tradeManager.evmRecharge(userAddress, rechargeAmount, userLevel, chainIdsConfig.getTron(), RechargeStatusEnum.RECHARGE_SUCCESS.getStatus());
 //                    Integer a = evmUserWalletMapper.getUserLevel(appUserMapper.findUserIdByUserAddress(userAddress));
 //                    BigDecimal b = LevelEnum.getRechargeAmountByLevel(userLevel);
@@ -131,20 +140,17 @@ public class TronEventManager {
                     log.info("当前扫描到的区块是" + blockNumber);
     
                     eventEntity.setBlockNum(blockNumber);
+                }else if(eventName.equals("TransferUsdt")){
+                    JSONObject eventParams = JSONObject.parseObject(eventObj.get("result").toString());
+                    String userAddress = TronUtils.fromHexAddress("41" + eventParams.get(0).toString().substring(2)).toLowerCase();
+                    BigDecimal rechargeAmount = new BigDecimal(eventParams.get(1).toString());
+                    tradeManager.donaTransferUsdt(userAddress, rechargeAmount, chainIdsConfig.getTron());
+                    donaUsersWalletsService.updateUsdWallet(donaUsersWalletsMapper.selectUserIdByAddress(userAddress), rechargeAmount, FlowingActionEnum.TRANSFER, UsdLogTypeEnum.RECHARGE);
                 }
-//                } else if (eventName.equals("BuyPowerTwo")) {
-////                    this.buyPower(addr, inviteAddr, amount, 1);
-//                    log.info("当前扫描到的区块是" + blockNumber);
-//
-//                    eventEntity.setBlockNum(blockNumber.toString());
-//                } else if (eventName.equals("BuyLpPower")) {
-////                    this.buyLpPower(addr, inviteAddr, amount);
-//                    log.info("当前扫描到的区块是" + blockNumber);
-//
-//                    eventEntity.setBlockNum(blockNumber.toString());
-//                }
                 if (Help.isNotNull(eventEntity)) {
-                    eventService.save(eventEntity);
+                    evmEventService.save(eventEntity);
+                }else if(Help.isNotNull(donaEvmEvent)) {
+                    donaEvmEventService.save(donaEvmEvent);
                 }
             }
             //更新事务处理块no

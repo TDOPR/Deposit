@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.pp.model.AppUsers;
 import com.pp.model.dto.AppUserLoginDTO;
 import com.pp.model.dto.AppUserRegisterDTO;
+import com.pp.model.dto.BindMailDTO;
 import com.pp.model.dto.PageDTO;
 import com.pp.model.vo.AppTokenVO;
 import com.pp.model.vo.PageVO;
@@ -16,4 +17,6 @@ public interface AppUserService extends IService<AppUsers> {
     JsonResult<PageVO<UserRecordVO>> getRecord(String address, Page page);
     
     JsonResult<AppTokenVO> login(AppUserLoginDTO appUserLoginDTO, String localIp);
+    
+    JsonResult bindMail(BindMailDTO bindMailDTO);
 }

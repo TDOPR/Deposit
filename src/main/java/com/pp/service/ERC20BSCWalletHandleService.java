@@ -21,6 +21,8 @@ public interface ERC20BSCWalletHandleService {
      */
     BigInteger queryBlockLast();
     
+    String createTransferUsdtEvent();
+    
     /**
      * 获取区块的交易信息
      *

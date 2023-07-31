@@ -2,6 +2,7 @@ package com.pp.manager;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.pp.model.AppUsers;
+import com.pp.model.DonaTransferUsdt;
 import com.pp.model.EvmRecharge;
 import com.pp.model.EvmUserWallet;
 import com.pp.service.*;
@@ -31,6 +32,9 @@ public class TradeManager {
     @Autowired
     private EvmUserWalletService evmUserWalletService;
     
+    @Autowired
+    private  DonaTransferUsdtService donaTransferUsdtService;
+    
     @Transactional
     public void evmRecharge(String userAddress, BigDecimal rechargeAmount, Integer level, Integer chainId, Integer rechargeStatus) {
         
@@ -45,6 +49,21 @@ public class TradeManager {
                 .status(rechargeStatus)
                 .build();
         evmRechargeService.save(evmRecharge);
+        
+    }
+    
+    @Transactional
+    public void donaTransferUsdt(String userAddress, BigDecimal donaTransferUsdtAmount,  Integer chainId) {
+        
+        AppUsers email = appUserService.getOne(new LambdaQueryWrapper<AppUsers>().select(AppUsers::getId).eq(AppUsers::getUserAddress, userAddress));
+        
+        DonaTransferUsdt donaTransferUsdt = DonaTransferUsdt.builder()
+                .email(email.getEmail())
+                .address(userAddress)
+                .donaTransferUsdtAmount(donaTransferUsdtAmount)
+                .chainId(chainId)
+                .build();
+        donaTransferUsdtService.save(donaTransferUsdt);
         
     }
     

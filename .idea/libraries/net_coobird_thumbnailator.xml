@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="net.coobird.thumbnailator" type="repository">
+    <properties maven-id="net.coobird:thumbnailator:0.4.12" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/net/coobird/thumbnailator/0.4.12/thumbnailator-0.4.12.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/net/coobird/thumbnailator/0.4.12/thumbnailator-0.4.12-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

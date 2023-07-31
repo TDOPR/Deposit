@@ -144,6 +144,19 @@ public class ERC20BSCWalletHandleServiceImpl implements ERC20BSCWalletHandleServ
     }
     
     /**
+     * 创建TransferUsdt的event对象
+     *
+     * @return
+     */
+    @Override
+    public String createTransferUsdtEvent() {
+        Event event = new Event("TransferUsdt",
+                Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {},
+                        new TypeReference<Uint256>() {}));
+        return EventEncoder.encode(event);
+    }
+    
+    /**
      * 获取filter日志log
      *
      * @return

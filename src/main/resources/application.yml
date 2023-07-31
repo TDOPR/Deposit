@@ -98,6 +98,12 @@ app:
   singleDeploy: true
   #是否为正式环境 (false 忽略验证码验证)
   prodEnv: false
+  #是否主动拉取订单状态
+  enableQueryOrdersStatus: false
+  #源文件
+  sourceFile: C:\\Users\\Administrator\\Desktop\\exmple.png
+  #suffix
+  suffix: png
 
 #基础token
 token:

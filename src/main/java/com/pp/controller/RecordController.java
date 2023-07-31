@@ -4,6 +4,7 @@ import com.pp.mapper.AppUserMapper;
 import com.pp.mapper.EvmUserWalletMapper;
 import com.pp.mapper.WalletsMapper;
 import com.pp.model.dto.AppUserLoginDTO;
+import com.pp.model.dto.BindMailDTO;
 import com.pp.model.dto.PageDTO;
 import com.pp.model.dto.RecordDTO;
 import com.pp.model.vo.PageVO;
@@ -50,5 +51,15 @@ public class RecordController {
     @PostMapping("/userLevel")
     public JsonResult userLevel(@RequestBody AppUserLoginDTO appUserLoginDTO) {
         return JsonResult.successResult(evmUserWalletMapper.getUserLevel(appUserMapper.findUserIdByUserAddress(appUserLoginDTO.getUserAddress())));
+    }
+    
+    /**
+     * 绑定邮箱
+     */
+    @PrintLog
+    @RepeatSubmit
+    @PostMapping("/bindMail")
+    public JsonResult bindMail(@RequestBody BindMailDTO bindMailDTO) {
+        return JsonResult.successResult(appUserService.bindMail(bindMailDTO));
     }
 }

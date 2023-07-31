@@ -1,6 +1,7 @@
 package com.pp.service.impl;
 
 
+import cn.hutool.http.HttpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -15,6 +16,7 @@ import com.pp.mapper.WalletsMapper;
 import com.pp.model.*;
 import com.pp.model.dto.AppUserLoginDTO;
 import com.pp.model.dto.AppUserRegisterDTO;
+import com.pp.model.dto.BindMailDTO;
 import com.pp.model.dto.PageDTO;
 import com.pp.model.vo.AppTokenVO;
 import com.pp.model.vo.PageVO;
@@ -69,6 +71,9 @@ public class AppUserServiceImpl extends ServiceImpl<AppUserMapper, AppUsers> imp
     
     @Autowired
     ChainIdsConfig chainIdsConfig;
+    
+    @Autowired
+    AppDonaUserService appDonaUserService;
     
     @Override
     public JsonResult<AppTokenVO> login(AppUserLoginDTO appUserLoginDTO, String localIp) {
@@ -212,4 +217,33 @@ public class AppUserServiceImpl extends ServiceImpl<AppUserMapper, AppUsers> imp
         }
         return inviteCode;
     }
+    
+    @Override
+    public JsonResult bindMail(BindMailDTO bindMailDTO){
+        
+        if (GlobalProperties.isProdEnv()) {
+            String cacheKey = CacheKeyPrefixConstants.CAPTCHA_CODE + bindMailDTO.getUuid();
+            String code = RedisUtil.getCacheObject(cacheKey);
+            if (code == null) {
+                return JsonResult.failureResult(ReturnMessageEnum.VERIFICATION_CODE_EXPIRE);
+            }
+            if (!code.equals(bindMailDTO.getCode())) {
+                return JsonResult.failureResult(ReturnMessageEnum.VERIFICATION_CODE_ERROR);
+            }
+        }
+        AppUsers appUsers;
+        appUsers = this.getOne(new LambdaQueryWrapper<AppUsers>().eq(AppUsers::getEmail, bindMailDTO.getEmail()));
+        if(appUsers == null){
+            UpdateWrapper<AppUsers> updateWrapper = Wrappers.update();
+            updateWrapper.lambda()
+                    .set(AppUsers::getEmail, bindMailDTO.getEmail())
+                    .eq(AppUsers::getId, JwtTokenUtil.getUserIdFromToken(ThreadLocalManager.getToken()));
+            boolean flag = this.update(updateWrapper);
+            appDonaUserService.registerDonaUser(bindMailDTO);
+            return JsonResult.build(flag);
+        }else {
+            return JsonResult.failureResult(ReturnMessageEnum.EMAIL_EXISTS);
+        }
+    }
+    
 }
