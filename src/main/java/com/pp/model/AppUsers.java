@@ -78,15 +78,15 @@ public class AppUsers extends BaseModelCID {
      */
     private Integer level;
     
-    /**
-     * 小团队业绩
-     */
-    private BigDecimal minTeamAmount;
-    
-    /**
-     * 团队总业绩
-     */
-    private BigDecimal teamTotalAmount;
+//    /**
+//     * 小团队业绩
+//     */
+//    private BigDecimal minTeamAmount;
+//
+//    /**
+//     * 团队总业绩
+//     */
+//    private BigDecimal teamTotalAmount;
     
 //    public String getUserAddress() {
 //        return userAddress.toLowerCase();

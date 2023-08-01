@@ -11,7 +11,7 @@ public interface AppDonaUserService extends IService<AppDonaUsers> {
     
 //        JsonResult login(AppDonaUserLoginDTO appUserLoginDTO, String localIp);
 
-        JsonResult registerDonaUser(BindMailDTO bindMailDTO);
+        void registerDonaUser(BindMailDTO bindMailDTO);
 //        JsonResult findPassword(FindPasswordDTO findPasswordDTO);
 //        JsonResult modifyUserName(AppDonaUserDTO appUserDTO);
         

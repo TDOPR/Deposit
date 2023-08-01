@@ -1,19 +1,11 @@
 package com.pp.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.pp.enums.DataSavePathEnum;
 import com.pp.mapper.CertificateMapper;
 import com.pp.model.Certificate;
 import com.pp.service.CertificateService;
-import com.pp.utils.AppParamProperties;
-import com.pp.utils.MyIncrementGenerator;
-import com.summer.common.config.AppParamProperties;
-import com.summer.common.config.GlobalProperties;
-import com.summer.common.enums.DataSavePathEnum;
-import com.summer.common.model.JsonResult;
-import com.summer.common.util.*;
-import com.summer.mapper.CertificateMapper;
-import com.summer.model.Certificate;
-import com.summer.service.CertificateService;
+import com.pp.utils.*;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 
@@ -33,10 +25,6 @@ public class CertificateServiceImpl extends ServiceImpl<CertificateMapper, Certi
 
     @Resource
     private AppParamProperties appParamProperties;
-    @Resource
-    private ThumbnailsService thumbnailsService;
-    @Resource
-    private MyIncrementGenerator myIncrementGenerator;
     
     @Override
     public JsonResult generateCertificate(Integer userId, String name, String number, String level, LocalDateTime date){

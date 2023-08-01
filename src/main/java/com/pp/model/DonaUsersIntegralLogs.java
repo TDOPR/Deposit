@@ -1,7 +1,7 @@
 package com.pp.model;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.summer.common.base.BaseModelNoModifyTime;
+import com.pp.utils.BaseModelNoModifyTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

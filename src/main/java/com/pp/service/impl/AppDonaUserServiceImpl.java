@@ -80,8 +80,6 @@ public class AppDonaUserServiceImpl extends ServiceImpl<AppDonaUsersMapper, AppD
     @Autowired
     private DonaUsersIntegralWalletsLogsService donaUsersIntegralWalletsLogsService;
     
-    @Resource
-    private MyIncrementGenerator myIncrementGenerator;
     
     @Autowired
     private CertificateService certificateService;
@@ -249,18 +247,18 @@ public class AppDonaUserServiceImpl extends ServiceImpl<AppDonaUsersMapper, AppD
 
     @Override
     @Transactional
-    public JsonResult registerDonaUser(BindMailDTO bindMailDTO) {
-        if (GlobalProperties.isProdEnv()) {
-            String cacheKey = CacheKeyPrefixConstants.CAPTCHA_CODE + bindMailDTO.getUuid();
-            String code = RedisUtil.getCacheObject(cacheKey);
-            if (code == null) {
-                return JsonResult.failureResult(ReturnMessageEnum.VERIFICATION_CODE_EXPIRE);
-            }
-            if (!code.equals(bindMailDTO.getCode())) {
-                return JsonResult.failureResult(ReturnMessageEnum.VERIFICATION_CODE_ERROR);
-            }
-        }
-        Certificate certificate;
+    public void registerDonaUser(BindMailDTO bindMailDTO) {
+//        if (GlobalProperties.isProdEnv()) {
+//            String cacheKey = CacheKeyPrefixConstants.CAPTCHA_CODE + bindMailDTO.getUuid();
+//            String code = RedisUtil.getCacheObject(cacheKey);
+//            if (code == null) {
+//                return JsonResult.failureResult(ReturnMessageEnum.VERIFICATION_CODE_EXPIRE);
+//            }
+//            if (!code.equals(bindMailDTO.getCode())) {
+//                return JsonResult.failureResult(ReturnMessageEnum.VERIFICATION_CODE_ERROR);
+//            }
+//        }
+//        Certificate certificate;
         AppDonaUsers appDonaUsers;
         appDonaUsers = this.getOne(new LambdaQueryWrapper<AppDonaUsers>().eq(AppDonaUsers::getEmail, bindMailDTO.getEmail()));
         if (appDonaUsers == null) {
@@ -274,7 +272,7 @@ public class AppDonaUserServiceImpl extends ServiceImpl<AppDonaUsersMapper, AppD
 //                inviteUserId = inviteUser.getId();
 //            }
             //注册
-            String zeroCertificate = myIncrementGenerator.usingMath(CarbonConfig.STRING_LENGTH);
+            String zeroCertificate = MyIncrementGeneratorUtil.usingMath(CarbonConfig.STRING_LENGTH);
             appDonaUsers = new AppDonaUsers();
             appDonaUsers.setEmail(bindMailDTO.getEmail());
             appDonaUsers.setLevel(VipLevelEnum.ZERO.getLevel());
@@ -328,20 +326,21 @@ public class AppDonaUserServiceImpl extends ServiceImpl<AppDonaUsersMapper, AppD
 //                //保存上下级关系
 //                treePathService.insertTreePath(appUsers.getId(), inviteUserId);
 //            }
-
-            String token = JwtTokenUtil.getToken(appDonaUsers.getId());
-            //把token存储到缓存中
-            String tokenKey = CacheKeyPrefixConstants.APP_TOKEN + appDonaUsers.getId() + ":" + IdUtil.simpleUUID();
-            RedisUtil.setCacheObject(tokenKey, token, Duration.ofSeconds(GlobalProperties.getTokenExpire()));
-//            sysLoginLogService.save(new SysLoginLog(appDonaUsers.getEmail(), localIp, 2));
-            //返回token给客户端
-            JSONObject json = new JSONObject();
-            json.put(SystemConstants.TOKEN_NAME, tokenKey);
-//            json.put("greenhorn", true);
-            json.put("integralAmount", CarbonConfig.REGISTER_REWARDS);
-            return JsonResult.successResult(json);
-        } else {
-            return JsonResult.failureResult(ReturnMessageEnum.EMAIL_EXISTS);
+//
+//            String token = JwtTokenUtil.getToken(appDonaUsers.getId());
+//            //把token存储到缓存中
+//            String tokenKey = CacheKeyPrefixConstants.APP_TOKEN + appDonaUsers.getId() + ":" + IdUtil.simpleUUID();
+//            RedisUtil.setCacheObject(tokenKey, token, Duration.ofSeconds(GlobalProperties.getTokenExpire()));
+////            sysLoginLogService.save(new SysLoginLog(appDonaUsers.getEmail(), localIp, 2));
+//            //返回token给客户端
+//            JSONObject json = new JSONObject();
+//            json.put(SystemConstants.TOKEN_NAME, tokenKey);
+////            json.put("greenhorn", true);
+//            json.put("integralAmount", CarbonConfig.REGISTER_REWARDS);
+//            return JsonResult.successResult(json);
+//        } else {
+//            return JsonResult.failureResult(ReturnMessageEnum.EMAIL_EXISTS);
+//        }
         }
     }
 

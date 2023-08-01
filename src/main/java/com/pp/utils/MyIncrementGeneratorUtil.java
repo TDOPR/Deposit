@@ -1,12 +1,17 @@
 package com.pp.utils;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.util.Random;
 import java.util.UUID;
 
-public class MyIncrementGenerator {
-    private MyIncrementGenerator() {
-    }
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class MyIncrementGeneratorUtil {
+//    private MyIncrementGeneratorUtil() {
+//    }
     
     /**
      * 得到32位唯一的UUID
@@ -87,7 +92,7 @@ public class MyIncrementGenerator {
         return str;
     }
     
-    public String usingMath(int length) {
+    public static String usingMath(int length) {
         String alphabetsInUpperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String alphabetsInLowerCase = "abcdefghijklmnopqrstuvwxyz";
         String numbers = "0123456789";
